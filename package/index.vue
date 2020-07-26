@@ -9,6 +9,8 @@
           <el-button size="mini" icon="el-icon-circle-plus" type="primary" @click="newDiagram">新建</el-button>
           <el-button size="mini" icon="el-icon-download" type="primary" @click="saveFile('xml')">下载xml</el-button>
           <el-button size="mini" icon="el-icon-picture" type="primary" @click="saveFile('svg')">下载svg</el-button>
+          <el-button size="mini" icon="el-icon-back" type="primary" @click="modeler.get('commandStack').undo()">后退</el-button>
+          <el-button size="mini" icon="el-icon-right" type="primary" @click="modeler.get('commandStack').redo()">前进</el-button>
         </div>
       </el-header>
       <el-container style="align-items: stretch">
