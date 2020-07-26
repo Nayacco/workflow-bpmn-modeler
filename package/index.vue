@@ -1,11 +1,26 @@
 <template>
-  <div class="containers">
-    <el-button-group>
-      <el-button size="mini" type="primary" @click="saveFile('xml')">下载xml</el-button>
-      <el-button size="mini" type="primary" @click="saveFile('svg')">下载svg</el-button>
-    </el-button-group>
-    <div ref="canvas" class="canvas" />
-    <panel v-if="modeler" :modeler="modeler" :users="users" />
+  <div class="flow-containers">
+    <el-container>
+      <el-header>
+        <div style="display: flex; padding: 10px 20px;">
+          <el-upload style="margin-riight: 20px" class="load" action="" :before-upload="openBpmn">
+            <el-button size="mini" icon="el-icon-folder-opened" type="primary">加载xml</el-button>
+          </el-upload>
+          <el-button size="mini" icon="el-icon-circle-plus" type="primary" @click="newDiagram">新建</el-button>
+          <el-button size="mini" icon="el-icon-download" type="primary" @click="saveFile('xml')">下载xml</el-button>
+          <el-button size="mini" icon="el-icon-picture" type="primary" @click="saveFile('svg')">下载svg</el-button>
+        </div>
+      </el-header>
+      <el-container style="align-items: stretch">
+        <el-main height="100%">
+          <div ref="canvas" class="canvas" />
+        </el-main>
+        <el-aside style="width: 300px; background-color: #f0f2f5">
+          <panel v-if="modeler" :modeler="modeler" :users="users" />
+        </el-aside>
+      </el-container>
+    </el-container>
+
   </div>
 </template>
 
@@ -37,13 +52,18 @@ export default {
       container: this.$refs.canvas
     })
     // 新增流程定义
-    this.createNewDiagram()
+    this.newDiagram()
+    // 让图能自适应屏幕
+    this.modeler.get('canvas').zoom('fit-viewport')
   },
   methods: {
-    async createNewDiagram() {
+    newDiagram() {
+      this.createNewDiagram(flowableInitStr)
+    },
+    async createNewDiagram(data) {
       // 将字符串转换成图显示出来
       try {
-        await this.modeler.importXML(flowableInitStr)
+        await this.modeler.importXML(data)
         this.adjustPalette()
       } catch (err) {
         console.error(err.message, err.warnings)
@@ -107,12 +127,20 @@ export default {
           const { xml } = await this.modeler.saveXML({ format: true })
           this.downloadFile('测试.bpmn20.xml', xml, 'application/xml')
         } else {
-          const { svg } = await this.modeler.saveSvg({ format: true })
+          const { svg } = await this.modeler.saveSVG({ format: true })
           this.downloadFile('图像', svg, 'image/svg+xml')
         }
       } catch (err) {
         console.log(err)
       }
+    },
+    openBpmn(file) {
+      const reader = new FileReader()
+      reader.readAsText(file, 'utf-8')
+      reader.onload = () => {
+        this.createNewDiagram(reader.result)
+      }
+      return false
     },
     downloadFile(filename, data, type) {
       var a = document.createElement('a')
@@ -132,14 +160,14 @@ export default {
 @import "~bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
 @import "~bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css";
 @import "~bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
-.containers {
-  position: absolute;
-  background-color: #ffffff;
+.flow-containers {
+  // background-color: #ffffff;
   width: 100%;
   height: 100%;
   .canvas {
     width: 100%;
     height: 100%;
+    min-height: 580px;
     // margin: 0 400px 0 0;
   }
   .panel {
@@ -147,6 +175,9 @@ export default {
     right: 0;
     top: 50px;
     width: 300px;
+  }
+  .load {
+    margin-right: 10px;
   }
 }
 </style>

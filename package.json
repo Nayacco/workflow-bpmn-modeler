@@ -10,7 +10,6 @@
   "dependencies": {
     "bpmn-js": "^7.2.1",
     "element-ui": "^2.12.0",
-    "uuid": "^8.2.0",
     "vue": "^2.6.10",
     "xcrud": "0.3.19"
   },

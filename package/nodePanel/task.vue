@@ -5,16 +5,10 @@
 </template>
 
 <script>
+import mixinPanel from '../common/mixinPanel'
 export default {
+  mixins: [mixinPanel],
   props: {
-    modeler: {
-      type: Object,
-      required: true
-    },
-    element: {
-      type: Object,
-      required: true
-    },
     users: {
       type: Array,
       required: true
@@ -44,7 +38,7 @@ export default {
             xType: 'input',
             name: 'id',
             label: '节点 id',
-            disabled: true
+            rules: [{ required: true, message: 'Id 不能为空' }]
           },
           {
             xType: 'input',
@@ -124,13 +118,6 @@ export default {
     }
   },
   watch: {
-    'formData.name': function(val) {
-      this.updateProperties({ name: val })
-    },
-    'formData.color': function(val) {
-      this.setColor({ fill: null, stroke: val })
-      this.updateProperties({ color: val })
-    },
     'formData.userType': function(val) {
       const types = ['assignee', 'candidateUsers', 'candidateGroups']
       types.forEach(type => {
@@ -211,16 +198,6 @@ export default {
         this.formData = cache
       },
       immediate: true
-    }
-  },
-  methods: {
-    updateProperties(properties) {
-      const modeling = this.modeler.get('modeling')
-      modeling.updateProperties(this.element, properties)
-    },
-    setColor(properties) {
-      const modeling = this.modeler.get('modeling')
-      modeling.setColor(this.element, properties)
     }
   }
 }
