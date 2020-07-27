@@ -15,13 +15,20 @@ export default {
   },
   computed: {
     formConfig() {
+      const _this = this
       return {
         inline: false,
         item: [
           {
+            xType: 'select',
+            name: 'processCategory',
+            label: '流程分类',
+            dic: { data: _this.categorys, label: 'name', value: 'id' }
+          },
+          {
             xType: 'input',
             name: 'id',
-            label: '流程标识 key',
+            label: '流程标识key',
             rules: [{ required: true, message: 'Id 不能为空' }]
           },
           {
@@ -39,6 +46,13 @@ export default {
     }
   },
   watch: {
+    'formData.processCategory': function(val) {
+      if (val) {
+        this.updateProperties({ 'flowable:processCategory': val })
+      } else {
+        delete this.element.businessObject.$attrs['flowable:processCategory']
+      }
+    },
     element: {
       handler: function(val) {
         const cache = {

@@ -7,6 +7,7 @@
       :modeler="modeler"
       :users="users"
       :groups="groups"
+      :categorys="categorys"
     />
   </div>
 </template>
@@ -16,10 +17,23 @@ import taskPanel from './nodePanel/task'
 import startEndPanel from './nodePanel/startEnd'
 import processPanel from './nodePanel/process'
 import sequenceFlowPanel from './nodePanel/sequenceFlow'
+import gatewayPanel from './nodePanel/gateway'
 export default {
   name: 'PropertyPanel',
-  components: { processPanel, taskPanel, startEndPanel, sequenceFlowPanel },
+  components: { processPanel, taskPanel, startEndPanel, sequenceFlowPanel, gatewayPanel },
   props: {
+    users: {
+      type: Array,
+      required: true
+    },
+    groups: {
+      type: Array,
+      required: true
+    },
+    categorys: {
+      type: Array,
+      required: true
+    },
     modeler: {
       type: Object,
       required: true
@@ -33,16 +47,6 @@ export default {
         name: '',
         color: null
       },
-      users: [
-        { label: '张三', value: 'zhangsan' },
-        { label: '李四', value: 'lisi' },
-        { label: '王五', value: 'wangwu' }
-      ],
-      groups: [
-        { label: 'web组', value: 'web' },
-        { label: 'java组', value: 'java' },
-        { label: 'python组', value: 'python' }
-      ],
       roles: [
         { value: 'manager', label: '经理' },
         { value: 'personnel', label: '人事' },
@@ -62,6 +66,9 @@ export default {
       if (type === 'bpmn:SequenceFlow') {
         return 'sequenceFlowPanel'
       }
+      if (type === 'bpmn:ExclusiveGateway') {
+        return 'gatewayPanel'
+      }
       if (type === 'bpmn:Process') {
         return 'processPanel'
       }
@@ -75,6 +82,7 @@ export default {
     handleModeler() {
       this.modeler.on('element.click', e => {
         const { element } = e
+        console.log(element)
         if (element.type === 'bpmn:Process') {
           this.element = element
         }
@@ -85,7 +93,6 @@ export default {
         const element = e.newSelection[0]
         if (element) {
           this.$nextTick().then(() => {
-            console.log(element)
             this.element = element
           })
         }

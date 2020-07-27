@@ -62,7 +62,7 @@ export default {
             label: '指定人员',
             allowCreate: true,
             filterable: true,
-            dic: _this.users,
+            dic: { data: _this.users, label: 'name', value: 'id' },
             show: _this.formData.userType === 'assignee'
           },
           {
@@ -72,7 +72,7 @@ export default {
             multiple: true,
             allowCreate: true,
             filterable: true,
-            dic: _this.users,
+            dic: { data: _this.users, label: 'name', value: 'id' },
             show: _this.formData.userType === 'candidateUsers'
           },
           {
@@ -82,7 +82,7 @@ export default {
             multiple: true,
             allowCreate: true,
             filterable: true,
-            dic: _this.groups,
+            dic: { data: _this.groups, label: 'name', value: 'id' },
             show: _this.formData.userType === 'candidateGroups'
           },
           {

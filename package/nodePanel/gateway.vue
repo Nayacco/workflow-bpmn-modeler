@@ -35,32 +35,22 @@ export default {
             label: '节点颜色'
           },
           {
-            xType: 'input',
-            name: 'initiator',
-            label: '发起人'
-          },
-          {
-            xType: 'input',
-            name: 'formKey',
-            label: '表单标识key'
+            xType: 'switch',
+            name: 'async',
+            label: '异步',
+            activeText: '是',
+            inactiveText: '否'
           }
         ]
       }
     }
   },
   watch: {
-    'formData.initiator': function(val) {
+    'formData.async': function(val) {
       if (val) {
-        this.updateProperties({ 'flowable:initiator': val })
+        this.updateProperties({ 'flowable:async': true })
       } else {
-        delete this.element.businessObject.$attrs[`flowable:initiator`]
-      }
-    },
-    'formData.formKey': function(val) {
-      if (val) {
-        this.updateProperties({ 'flowable:formKey': val })
-      } else {
-        delete this.element.businessObject.$attrs[`flowable:formKey`]
+        delete this.element.businessObject.$attrs[`flowable:async`]
       }
     },
     element: {

@@ -1,4 +1,18 @@
+import xcrud from 'xcrud'
+import golbalConfig from 'xcrud/package/common/config'
+golbalConfig.set({
+  input: {
+    size: 'mini'
+  },
+  xform: {
+    form: {
+      labelPosition: 'top',
+      size: 'mini'
+    }
+  }
+})
 export default {
+  components: { xForm: xcrud.xForm },
   props: {
     modeler: {
       type: Object,
@@ -6,6 +20,10 @@ export default {
     },
     element: {
       type: Object,
+      required: true
+    },
+    categorys: {
+      type: Array,
       required: true
     }
   },

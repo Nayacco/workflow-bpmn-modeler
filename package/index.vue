@@ -7,8 +7,8 @@
             <el-button size="mini" icon="el-icon-folder-opened" type="primary">加载xml</el-button>
           </el-upload>
           <el-button size="mini" icon="el-icon-circle-plus" type="primary" @click="newDiagram">新建</el-button>
-          <el-button size="mini" icon="el-icon-download" type="primary" @click="saveFile('xml')">下载xml</el-button>
-          <el-button size="mini" icon="el-icon-picture" type="primary" @click="saveFile('svg')">下载svg</el-button>
+          <el-button size="mini" icon="el-icon-download" type="primary" @click="saveXML(true)">下载xml</el-button>
+          <el-button size="mini" icon="el-icon-picture" type="primary" @click="saveImg('svg', true)">下载svg</el-button>
           <el-button size="mini" icon="el-icon-back" type="primary" @click="modeler.get('commandStack').undo()">后退</el-button>
           <el-button size="mini" icon="el-icon-right" type="primary" @click="modeler.get('commandStack').redo()">前进</el-button>
         </div>
@@ -18,7 +18,7 @@
           <div ref="canvas" class="canvas" />
         </el-main>
         <el-aside style="width: 300px; background-color: #f0f2f5">
-          <panel v-if="modeler" :modeler="modeler" :users="users" />
+          <panel v-if="modeler" :modeler="modeler" :users="users" :groups="groups" :categorys="categorys" />
         </el-aside>
       </el-container>
     </el-container>
@@ -27,40 +27,85 @@
 </template>
 
 <script>
-import './main.js'
+// 汉化
+import customTranslate from './common/customTranslate'
 import Modeler from 'bpmn-js/lib/Modeler'
 import panel from './PropertyPanel'
 import BpmData from './BpmData'
-import flowableInitStr from './init/flowable'
+import getInitStr from './init/flowable'
 export default {
   components: {
     panel
   },
+  props: {
+    xml: {
+      type: String,
+      default: ''
+    },
+    users: {
+      type: Array,
+      default: () => {
+        return [
+          { name: '张三', id: 'zhangsan' },
+          { name: '李四', id: 'lisi' },
+          { name: '王五', id: 'wangwu' }
+        ]
+      }
+    },
+    groups: {
+      type: Array,
+      default: () => {
+        return [
+          { name: 'web组', id: 'web' },
+          { name: 'java组', id: 'java' },
+          { name: 'python组', id: 'python' }
+        ]
+      }
+    },
+    categorys: {
+      type: Array,
+      default: () => {
+        return [
+          { name: 'OA', id: 'oa' },
+          { name: '财务', id: 'finance' }
+        ]
+      }
+    }
+  },
   data() {
     return {
       modeler: null,
-      bpmData: new BpmData(),
-      users: [
-        { label: '张三', value: 'zhangsan' },
-        { label: '李四', value: 'lisi' },
-        { label: '王二', value: 'wanger' },
-        { label: '麻子', value: 'mazi' }
-      ]
+      bpmData: new BpmData() }
+  },
+  watch: {
+    xml: function(val) {
+      if (val) {
+        this.createNewDiagram(val)
+      }
     }
   },
   mounted() {
     // 生成实例
     this.modeler = new Modeler({
-      container: this.$refs.canvas
+      container: this.$refs.canvas,
+      additionalModules: [
+        {
+          translate: ['value', customTranslate]
+        }
+      ]
     })
     // 新增流程定义
-    this.newDiagram()
+    if (!this.xml) {
+      this.newDiagram()
+    } else {
+      this.createNewDiagram(this.xml)
+    }
     // 让图能自适应屏幕
     this.modeler.get('canvas').zoom('fit-viewport')
   },
   methods: {
     newDiagram() {
-      this.createNewDiagram(flowableInitStr)
+      this.createNewDiagram(getInitStr())
     },
     async createNewDiagram(data) {
       // 将字符串转换成图显示出来
@@ -123,15 +168,38 @@ export default {
         console.log(e)
       }
     },
-    async saveFile(type) {
+    // 对外 api
+    getProcess() {
+      const element = this.getProcessElement()
+      return {
+        id: element.id,
+        name: element.name,
+        category: element.$attrs['flowable:processCategory']
+      }
+    },
+    getProcessElement() {
+      return this.modeler.getDefinitions().rootElements[0]
+    },
+    async saveXML(download = false) {
       try {
-        if (type === 'xml') {
-          const { xml } = await this.modeler.saveXML({ format: true })
-          this.downloadFile('测试.bpmn20.xml', xml, 'application/xml')
-        } else {
-          const { svg } = await this.modeler.saveSVG({ format: true })
-          this.downloadFile('图像', svg, 'image/svg+xml')
+        let { xml } = await this.modeler.saveXML({ format: true })
+        xml = xml.replace(/&lt;/g, '<')
+        xml = xml.replace(/&gt;/g, '>')
+        if (download) {
+          this.downloadFile(`${this.getProcessElement().name}.bpmn20.xml`, xml, 'application/xml')
         }
+        return xml
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    async saveImg(type = 'svg', download = false) {
+      try {
+        const { svg } = await this.modeler.saveSVG({ format: true })
+        if (download) {
+          this.downloadFile(this.getProcessElement().name, svg, 'image/svg+xml')
+        }
+        return svg
       } catch (err) {
         console.log(err)
       }
