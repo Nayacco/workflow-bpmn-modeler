@@ -1,5 +1,6 @@
 import xcrud from 'xcrud'
 import golbalConfig from 'xcrud/package/common/config'
+import showConfig from '../flowable/showConfig'
 golbalConfig.set({
   input: {
     // size: 'mini'
@@ -50,6 +51,15 @@ export default {
     setColor(properties) {
       const modeling = this.modeler.get('modeling')
       modeling.setColor(this.element, properties)
+    }
+  },
+  computed: {
+    showConfig() {
+      const bizObj = this.element.businessObject
+      const type = bizObj.eventDefinitions
+        ? bizObj.eventDefinitions[0].$type
+        : bizObj.$type
+      return showConfig[type] || {}
     }
   }
 }

@@ -32,7 +32,7 @@ import customTranslate from './common/customTranslate'
 import Modeler from 'bpmn-js/lib/Modeler'
 import panel from './PropertyPanel'
 import BpmData from './BpmData'
-import getInitStr from './init/flowable'
+import getInitStr from './flowable/init'
 export default {
   components: {
     panel

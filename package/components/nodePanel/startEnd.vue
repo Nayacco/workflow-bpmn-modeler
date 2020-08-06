@@ -15,6 +15,7 @@ export default {
   },
   computed: {
     formConfig() {
+      const _this = this
       return {
         inline: false,
         item: [
@@ -37,12 +38,14 @@ export default {
           {
             xType: 'input',
             name: 'initiator',
-            label: '发起人'
+            label: '发起人',
+            show: !!_this.showConfig.initiator
           },
           {
             xType: 'input',
             name: 'formKey',
-            label: '表单标识key'
+            label: '表单标识key',
+            show: !!_this.showConfig.formKey
           }
         ]
       }
