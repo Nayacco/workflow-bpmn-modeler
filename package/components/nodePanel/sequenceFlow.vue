@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import mixinPanel from '../common/mixinPanel'
+import mixinPanel from '../../common/mixinPanel'
 export default {
   mixins: [mixinPanel],
   data() {
@@ -15,42 +15,53 @@ export default {
   },
   computed: {
     formConfig() {
-      const _this = this
       return {
         inline: false,
         item: [
           {
-            xType: 'select',
-            name: 'processCategory',
-            label: '流程分类',
-            dic: { data: _this.categorys, label: 'name', value: 'id' }
-          },
-          {
             xType: 'input',
             name: 'id',
-            label: '流程标识key',
+            label: '节点 id',
             rules: [{ required: true, message: 'Id 不能为空' }]
           },
           {
             xType: 'input',
             name: 'name',
-            label: '流程名称'
+            label: '节点名称'
           },
           {
             xType: 'colorPicker',
             name: 'color',
             label: '节点颜色'
+          },
+          {
+            xType: 'input',
+            name: 'conditionExpression',
+            label: '跳转条件'
+          },
+          {
+            xType: 'input',
+            name: 'skipExpression',
+            label: '跳过表达式'
           }
         ]
       }
     }
   },
   watch: {
-    'formData.processCategory': function(val) {
+    'formData.conditionExpression': function(val) {
       if (val) {
-        this.updateProperties({ 'flowable:processCategory': val })
+        const newCondition = this.modeler.get('moddle').create('bpmn:FormalExpression', { body: `<![CDATA[${val}]]>` })
+        this.updateProperties({ conditionExpression: newCondition })
       } else {
-        delete this.element.businessObject.$attrs['flowable:processCategory']
+        delete this.element.businessObject[`conditionExpression`]
+      }
+    },
+    'formData.skipExpression': function(val) {
+      if (val) {
+        this.updateProperties({ 'skipExpression': val })
+      } else {
+        delete this.element.businessObject.$attrs[`skipExpression`]
       }
     },
     element: {
@@ -66,6 +77,9 @@ export default {
             cache[newKey] = cache[key]
             delete cache[key]
           }
+          if (key === 'conditionExpression') {
+            cache[key] = cache[key].body?.replace(/<!\[CDATA\[(.+)\]\]>/, '$1')
+          }
         }
         this.formData = cache
       },
@@ -75,6 +89,4 @@ export default {
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

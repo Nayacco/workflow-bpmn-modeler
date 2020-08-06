@@ -17,7 +17,7 @@
         <el-main height="100%">
           <div ref="canvas" class="canvas" />
         </el-main>
-        <el-aside style="width: 300px; background-color: #f0f2f5">
+        <el-aside style="width: 400px; background-color: #f0f2f5">
           <panel v-if="modeler" :modeler="modeler" :users="users" :groups="groups" :categorys="categorys" />
         </el-aside>
       </el-container>
@@ -75,7 +75,8 @@ export default {
   data() {
     return {
       modeler: null,
-      bpmData: new BpmData() }
+      bpmData: new BpmData()
+    }
   },
   watch: {
     xml: function(val) {
@@ -248,6 +249,9 @@ export default {
   }
   .load {
     margin-right: 10px;
+  }
+  .el-form-item__label{
+    font-size: 13px;
   }
 }
 </style>

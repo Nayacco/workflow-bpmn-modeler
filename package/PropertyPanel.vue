@@ -13,11 +13,11 @@
 </template>
 
 <script>
-import taskPanel from './nodePanel/task'
-import startEndPanel from './nodePanel/startEnd'
-import processPanel from './nodePanel/process'
-import sequenceFlowPanel from './nodePanel/sequenceFlow'
-import gatewayPanel from './nodePanel/gateway'
+import taskPanel from './components/nodePanel/task'
+import startEndPanel from './components/nodePanel/startEnd'
+import processPanel from './components/nodePanel/process'
+import sequenceFlowPanel from './components/nodePanel/sequenceFlow'
+import gatewayPanel from './components/nodePanel/gateway'
 export default {
   name: 'PropertyPanel',
   components: { processPanel, taskPanel, startEndPanel, sequenceFlowPanel, gatewayPanel },

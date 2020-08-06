@@ -2,11 +2,14 @@ import xcrud from 'xcrud'
 import golbalConfig from 'xcrud/package/common/config'
 golbalConfig.set({
   input: {
-    size: 'mini'
+    // size: 'mini'
+  },
+  select: {
+    // size: 'mini'
   },
   xform: {
     form: {
-      labelPosition: 'top',
+      // labelPosition: 'top',
       size: 'mini'
     }
   }

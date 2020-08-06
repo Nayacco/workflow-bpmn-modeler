@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import mixinPanel from '../common/mixinPanel'
+import mixinPanel from '../../common/mixinPanel'
 export default {
   mixins: [mixinPanel],
   data() {

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import mixinPanel from '../common/mixinPanel'
+import mixinPanel from '../../common/mixinPanel'
 export default {
   mixins: [mixinPanel],
   data() {
@@ -15,52 +15,42 @@ export default {
   },
   computed: {
     formConfig() {
+      const _this = this
       return {
         inline: false,
         item: [
           {
+            xType: 'select',
+            name: 'processCategory',
+            label: '流程分类',
+            dic: { data: _this.categorys, label: 'name', value: 'id' }
+          },
+          {
             xType: 'input',
             name: 'id',
-            label: '节点 id',
+            label: '流程标识key',
             rules: [{ required: true, message: 'Id 不能为空' }]
           },
           {
             xType: 'input',
             name: 'name',
-            label: '节点名称'
+            label: '流程名称'
           },
           {
             xType: 'colorPicker',
             name: 'color',
             label: '节点颜色'
-          },
-          {
-            xType: 'input',
-            name: 'initiator',
-            label: '发起人'
-          },
-          {
-            xType: 'input',
-            name: 'formKey',
-            label: '表单标识key'
           }
         ]
       }
     }
   },
   watch: {
-    'formData.initiator': function(val) {
+    'formData.processCategory': function(val) {
       if (val) {
-        this.updateProperties({ 'flowable:initiator': val })
+        this.updateProperties({ 'flowable:processCategory': val })
       } else {
-        delete this.element.businessObject.$attrs[`flowable:initiator`]
-      }
-    },
-    'formData.formKey': function(val) {
-      if (val) {
-        this.updateProperties({ 'flowable:formKey': val })
-      } else {
-        delete this.element.businessObject.$attrs[`flowable:formKey`]
+        delete this.element.businessObject.$attrs['flowable:processCategory']
       }
     },
     element: {

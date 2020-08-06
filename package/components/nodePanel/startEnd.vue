@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import mixinPanel from '../common/mixinPanel'
+import mixinPanel from '../../common/mixinPanel'
 export default {
   mixins: [mixinPanel],
   data() {
@@ -36,32 +36,31 @@ export default {
           },
           {
             xType: 'input',
-            name: 'conditionExpression',
-            label: '跳转条件'
+            name: 'initiator',
+            label: '发起人'
           },
           {
             xType: 'input',
-            name: 'skipExpression',
-            label: '跳过表达式'
+            name: 'formKey',
+            label: '表单标识key'
           }
         ]
       }
     }
   },
   watch: {
-    'formData.conditionExpression': function(val) {
+    'formData.initiator': function(val) {
       if (val) {
-        const newCondition = this.modeler.get('moddle').create('bpmn:FormalExpression', { body: `<![CDATA[${val}]]>` })
-        this.updateProperties({ conditionExpression: newCondition })
+        this.updateProperties({ 'flowable:initiator': val })
       } else {
-        delete this.element.businessObject[`conditionExpression`]
+        delete this.element.businessObject.$attrs[`flowable:initiator`]
       }
     },
-    'formData.skipExpression': function(val) {
+    'formData.formKey': function(val) {
       if (val) {
-        this.updateProperties({ 'skipExpression': val })
+        this.updateProperties({ 'flowable:formKey': val })
       } else {
-        delete this.element.businessObject.$attrs[`skipExpression`]
+        delete this.element.businessObject.$attrs[`flowable:formKey`]
       }
     },
     element: {
@@ -77,9 +76,6 @@ export default {
             cache[newKey] = cache[key]
             delete cache[key]
           }
-          if (key === 'conditionExpression') {
-            cache[key] = cache[key].body?.replace(/<!\[CDATA\[(.+)\]\]>/, '$1')
-          }
         }
         this.formData = cache
       },
@@ -89,4 +85,6 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+
+</style>
