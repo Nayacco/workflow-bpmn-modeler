@@ -74,8 +74,7 @@ export default {
   },
   data() {
     return {
-      modeler: null,
-      bpmData: new BpmData()
+      modeler: null
     }
   },
   watch: {
@@ -153,7 +152,7 @@ export default {
               control.dataset &&
               control.className.indexOf('entry') !== -1
             ) {
-              const controlProps = this.bpmData.getControl(
+              const controlProps = new BpmData().getControl(
                 control.dataset.action
               )
               control.innerHTML = `<div style='font-size: 14px;font-weight:500;margin-left:15px;'>${

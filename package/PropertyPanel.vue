@@ -1,5 +1,6 @@
 <template>
   <div ref="propertyPanel" class="property-panel">
+    <div v-if="nodeName" class="node-name">{{ nodeName }}</div>
     <component
       :is="getComponent"
       v-if="element"
@@ -18,6 +19,8 @@ import startEndPanel from './components/nodePanel/startEnd'
 import processPanel from './components/nodePanel/process'
 import sequenceFlowPanel from './components/nodePanel/sequenceFlow'
 import gatewayPanel from './components/nodePanel/gateway'
+import { NodeName } from './lang/zh'
+
 export default {
   name: 'PropertyPanel',
   components: { processPanel, taskPanel, startEndPanel, sequenceFlowPanel, gatewayPanel },
@@ -57,7 +60,7 @@ export default {
   computed: {
     getComponent() {
       const type = this.element?.type
-      if (type === 'bpmn:StartEvent' || type === 'bpmn:EndEvent') {
+      if (['bpmn:IntermediateThrowEvent', 'bpmn:StartEvent', 'bpmn:EndEvent'].includes(type)) {
         return 'startEndPanel'
       }
       if ([
@@ -77,13 +80,28 @@ export default {
       if (type === 'bpmn:SequenceFlow') {
         return 'sequenceFlowPanel'
       }
-      if (type === 'bpmn:ExclusiveGateway') {
+      if ([
+        'bpmn:InclusiveGateway',
+        'bpmn:ExclusiveGateway',
+        'bpmn:ParallelGateway',
+        'bpmn:EventBasedGateway'
+      ].includes(type)) {
         return 'gatewayPanel'
       }
       if (type === 'bpmn:Process') {
         return 'processPanel'
       }
       return null
+    },
+    nodeName() {
+      if (this.element) {
+        const bizObj = this.element.businessObject
+        const type = bizObj?.eventDefinitions
+          ? bizObj.eventDefinitions[0].$type
+          : bizObj.$type
+        return NodeName[type] || type
+      }
+      return ''
     }
   },
   mounted() {
@@ -122,6 +140,14 @@ export default {
   }
   .el-form-item--mini.el-form-item, .el-form-item--small.el-form-item {
     margin-bottom: 6px;
+  }
+  .node-name{
+    border-bottom: 1px solid #ccc;
+    padding: 0 0 10px 20px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #444;
   }
 }
 </style>

@@ -10,7 +10,7 @@ golbalConfig.set({
   },
   xform: {
     form: {
-      // labelPosition: 'top',
+      labelWidth: 'auto',
       size: 'mini'
     }
   }
@@ -54,12 +54,14 @@ export default {
     }
   },
   computed: {
-    showConfig() {
+    elementType() {
       const bizObj = this.element.businessObject
-      const type = bizObj.eventDefinitions
+      return bizObj.eventDefinitions
         ? bizObj.eventDefinitions[0].$type
         : bizObj.$type
-      return showConfig[type] || {}
+    },
+    showConfig() {
+      return showConfig[this.elementType] || {}
     }
   }
 }
