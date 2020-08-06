@@ -36,10 +36,17 @@ export default {
       ]
     }
   },
+  mounted() {
+    this.getModelDetail()
+  },
   methods: {
     getModelDetail() {
-      // 发送请求，获取xml
-      // this.xml = response.xml
+      fetch('https://cdn.jsdelivr.net/gh/goldsubmarine/workflow-bpmn-modeler@master/src/Leave.bpmn20.xml')
+        .then(response => {
+          return response.text()
+        }).then(xml => {
+          this.xml = xml
+        })
     },
     async save() {
       const processModel = this.$refs['refNode'].getProcess()
