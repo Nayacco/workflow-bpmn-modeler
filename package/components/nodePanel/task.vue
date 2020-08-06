@@ -54,7 +54,8 @@ export default {
             xType: 'select',
             name: 'userType',
             label: '人员类型',
-            dic: _this.userTypeOption
+            dic: _this.userTypeOption,
+            show: !!_this.showConfig.userType
           },
           {
             xType: 'select',
@@ -63,7 +64,7 @@ export default {
             allowCreate: true,
             filterable: true,
             dic: { data: _this.users, label: 'name', value: 'id' },
-            show: _this.formData.userType === 'assignee'
+            show: !!_this.showConfig.assignee && _this.formData.userType === 'assignee'
           },
           {
             xType: 'select',
@@ -73,7 +74,7 @@ export default {
             allowCreate: true,
             filterable: true,
             dic: { data: _this.users, label: 'name', value: 'id' },
-            show: _this.formData.userType === 'candidateUsers'
+            show: !!_this.showConfig.candidateUsers && _this.formData.userType === 'candidateUsers'
           },
           {
             xType: 'select',
@@ -83,35 +84,96 @@ export default {
             allowCreate: true,
             filterable: true,
             dic: { data: _this.groups, label: 'name', value: 'id' },
-            show: _this.formData.userType === 'candidateGroups'
+            show: !!_this.showConfig.candidateGroups && _this.formData.userType === 'candidateGroups'
           },
           {
             xType: 'switch',
             name: 'async',
             label: '异步',
             activeText: '是',
-            inactiveText: '否'
+            inactiveText: '否',
+            show: !!_this.showConfig.async
           },
           {
             xType: 'input',
             name: 'priority',
-            label: '优先级'
+            label: '优先级',
+            show: !!_this.showConfig.priority
           },
           {
             xType: 'input',
             name: 'formKey',
-            label: '表单标识key'
+            label: '表单标识key',
+            show: !!_this.showConfig.formKey
           },
           {
             xType: 'input',
             name: 'skipExpression',
-            label: '跳过表达式'
+            label: '跳过表达式',
+            show: !!_this.showConfig.skipExpression
+          },
+          {
+            xType: 'switch',
+            name: 'isForCompensation',
+            label: '是否为补偿',
+            activeText: '是',
+            inactiveText: '否',
+            show: !!_this.showConfig.isForCompensation
+          },
+          {
+            xType: 'switch',
+            name: 'triggerable',
+            label: '服务任务可触发',
+            activeText: '是',
+            inactiveText: '否',
+            show: !!_this.showConfig.triggerable
+          },
+          {
+            xType: 'switch',
+            name: 'autoStoreVariables',
+            label: '自动存储变量',
+            activeText: '是',
+            inactiveText: '否',
+            show: !!_this.showConfig.autoStoreVariables
+          },
+          {
+            xType: 'input',
+            name: 'ruleVariablesInput',
+            label: '输入变量',
+            show: !!_this.showConfig.ruleVariablesInput
+          },
+          {
+            xType: 'input',
+            name: 'rules',
+            label: '规则',
+            show: !!_this.showConfig.rules
+          },
+          {
+            xType: 'input',
+            name: 'resultVariable',
+            label: '结果变量',
+            show: !!_this.showConfig.resultVariable
+          },
+          {
+            xType: 'switch',
+            name: 'exclude',
+            label: '排除',
+            activeText: '是',
+            inactiveText: '否',
+            show: !!_this.showConfig.exclude
+          },
+          {
+            xType: 'input',
+            name: 'class',
+            label: '类',
+            show: !!_this.showConfig.class
           },
           {
             xType: 'datePicker',
             type: 'datetime',
             name: 'dueDate',
-            label: '到期时间'
+            label: '到期时间',
+            show: !!_this.showConfig.dueDate
           }
         ]
       }
@@ -170,6 +232,62 @@ export default {
         this.updateProperties({ 'flowable:skipExpression': val })
       } else {
         delete this.element.businessObject.$attrs[`flowable:skipExpression`]
+      }
+    },
+    'formData.isForCompensation': function(val) {
+      if (val) {
+        this.updateProperties({ 'isForCompensation': true })
+      } else {
+        delete this.element.businessObject.$attrs[`isForCompensation`]
+      }
+    },
+    'formData.triggerable': function(val) {
+      if (val) {
+        this.updateProperties({ 'flowable:triggerable': true })
+      } else {
+        delete this.element.businessObject.$attrs[`flowable:triggerable`]
+      }
+    },
+    'formData.class': function(val) {
+      if (val) {
+        this.updateProperties({ 'flowable:class': val })
+      } else {
+        delete this.element.businessObject.$attrs[`flowable:class`]
+      }
+    },
+    'formData.autoStoreVariables': function(val) {
+      if (val) {
+        this.updateProperties({ 'flowable:autoStoreVariables': true })
+      } else {
+        delete this.element.businessObject.$attrs[`flowable:autoStoreVariables`]
+      }
+    },
+    'formData.exclude': function(val) {
+      if (val) {
+        this.updateProperties({ 'flowable:exclude': true })
+      } else {
+        delete this.element.businessObject.$attrs[`flowable:exclude`]
+      }
+    },
+    'formData.ruleVariablesInput': function(val) {
+      if (val) {
+        this.updateProperties({ 'flowable:ruleVariablesInput': val })
+      } else {
+        delete this.element.businessObject.$attrs[`flowable:ruleVariablesInput`]
+      }
+    },
+    'formData.rules': function(val) {
+      if (val) {
+        this.updateProperties({ 'flowable:rules': val })
+      } else {
+        delete this.element.businessObject.$attrs[`flowable:rules`]
+      }
+    },
+    'formData.resultVariable': function(val) {
+      if (val) {
+        this.updateProperties({ 'flowable:resultVariable': val })
+      } else {
+        delete this.element.businessObject.$attrs[`flowable:resultVariable`]
       }
     },
     element: {

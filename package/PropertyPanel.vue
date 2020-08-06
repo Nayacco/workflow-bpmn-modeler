@@ -60,7 +60,18 @@ export default {
       if (type === 'bpmn:StartEvent' || type === 'bpmn:EndEvent') {
         return 'startEndPanel'
       }
-      if (type === 'bpmn:UserTask') {
+      if ([
+        'bpmn:UserTask',
+        'bpmn:Task',
+        'bpmn:SendTask',
+        'bpmn:ReceiveTask',
+        'bpmn:ManualTask',
+        'bpmn:BusinessRuleTask',
+        'bpmn:ServiceTask',
+        'bpmn:ScriptTask'
+        // 'bpmn:CallActivity',
+        // 'bpmn:SubProcess'
+      ].includes(type)) {
         return 'taskPanel'
       }
       if (type === 'bpmn:SequenceFlow') {
