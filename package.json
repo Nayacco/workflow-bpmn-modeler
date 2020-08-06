@@ -1,11 +1,33 @@
 {
-  "name": "vue-bpm",
+  "name": "workflow-bpmn-modeler",
   "version": "0.1.0",
-  "private": true,
+  "description": "基于 `vue` 和 `bpmn.io@7.0` ，实现 flowable 的 modeler 模型设计器",
+  "main": "package/index.vue",
   "scripts": {
     "dev": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GoldSubmarine/workflow-bpmn-modeler.git"
+  },
+  "keywords": [
+    "vue",
+    "element-ui",
+    "flowable",
+    "模型设计器"
+  ],
+  "author": {
+    "name": "charles",
+    "email": "997462392@qq.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GoldSubmarine/workflow-bpmn-modeler/issues"
   },
   "dependencies": {
     "bpmn-js": "^7.2.1",
@@ -23,5 +45,11 @@
     "sass": "^1.26.10",
     "sass-loader": "^9.0.2",
     "vue-template-compiler": "^2.6.11"
-  }
+  },
+  "files": [
+    "package",
+    "docs",
+    "README.md",
+    "LICENSE"
+  ]
 }
