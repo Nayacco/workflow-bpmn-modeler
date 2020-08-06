@@ -44,32 +44,15 @@ export default {
     },
     users: {
       type: Array,
-      default: () => {
-        return [
-          { name: '张三', id: 'zhangsan' },
-          { name: '李四', id: 'lisi' },
-          { name: '王五', id: 'wangwu' }
-        ]
-      }
+      default: () => []
     },
     groups: {
       type: Array,
-      default: () => {
-        return [
-          { name: 'web组', id: 'web' },
-          { name: 'java组', id: 'java' },
-          { name: 'python组', id: 'python' }
-        ]
-      }
+      default: () => []
     },
     categorys: {
       type: Array,
-      default: () => {
-        return [
-          { name: 'OA', id: 'oa' },
-          { name: '财务', id: 'finance' }
-        ]
-      }
+      default: () => []
     }
   },
   data() {
