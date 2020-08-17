@@ -2,6 +2,10 @@
 
 🔥 本项目基于 `vue` 和 `bpmn.io@7.0` ，实现 flowable 的 modeler 模型设计器
 
+## 预览
+
+![20200818001755](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200818001755.png)
+
 ## 在线 demo
 
 👉 https://goldsubmarine.github.io/workflow-bpmn-modeler/
