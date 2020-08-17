@@ -8,6 +8,9 @@ golbalConfig.set({
   select: {
     // size: 'mini'
   },
+  colorPicker: {
+    showAlpha: true
+  },
   xform: {
     form: {
       labelWidth: 'auto',
@@ -39,7 +42,8 @@ export default {
       this.updateProperties({ name: val })
     },
     'formData.color': function(val) {
-      this.setColor({ fill: null, stroke: val })
+      console.log(val)
+      this.setColor({ fill: val, stroke: val })
       this.updateProperties({ color: val })
     }
   },
