@@ -1,6 +1,6 @@
 # workflow-bpmn-modeler
 
-🔥 本项目基于 `vue` 和 `bpmn.io@7.0` ，实现 flowable 的 modeler 模型设计器
+🔥 本项目基于 `vue` 和 `bpmn.io@7.0` ，实现 flowable 的 modeler 流程设计器
 
 ## 预览
 
