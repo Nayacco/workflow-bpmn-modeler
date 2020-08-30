@@ -138,8 +138,11 @@ export default {
   .el-form--label-top .el-form-item__label {
     padding: 0;
   }
-  .el-form-item--mini.el-form-item, .el-form-item--small.el-form-item {
+  .el-form-item {
     margin-bottom: 6px;
+  }
+  .tab-table .el-form-item {
+    margin-bottom: 16px;
   }
   .node-name{
     border-bottom: 1px solid #ccc;

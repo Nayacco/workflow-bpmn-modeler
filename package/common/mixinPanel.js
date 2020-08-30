@@ -13,8 +13,8 @@ golbalConfig.set({
   },
   xform: {
     form: {
-      labelWidth: 'auto',
-      size: 'mini'
+      labelWidth: 'auto'
+      // size: 'mini'
     }
   }
 })
@@ -31,7 +31,7 @@ export default {
     },
     categorys: {
       type: Array,
-      required: true
+      default: () => []
     }
   },
   watch: {

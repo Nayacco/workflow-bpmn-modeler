@@ -54,6 +54,8 @@ import Modeler from 'bpmn-js/lib/Modeler'
 import panel from './PropertyPanel'
 import BpmData from './BpmData'
 import getInitStr from './flowable/init'
+// 引入flowable的节点文件
+import flowableModdle from './flowable/flowable.json'
 export default {
   components: {
     panel
@@ -98,7 +100,10 @@ export default {
         {
           translate: ['value', customTranslate]
         }
-      ]
+      ],
+      moddleExtensions: {
+        flowable: flowableModdle
+      }
     })
     // 新增流程定义
     if (!this.xml) {

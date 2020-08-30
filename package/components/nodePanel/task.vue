@@ -1,12 +1,28 @@
 <template>
   <div>
-    <x-form ref="xForm" v-model="formData" :config="formConfig" />
+    <x-form ref="xForm" v-model="formData" :config="formConfig">
+      <template #executionListener>
+        <el-badge :value="executionListenerLength">
+          <el-button size="small" @click="dialogName = 'executionListenerDialog'">编辑</el-button>
+        </el-badge>
+      </template>
+    </x-form>
+    <executionListenerDialog
+      v-if="dialogName === 'executionListenerDialog'"
+      :element="element"
+      :modeler="modeler"
+      @close="close"
+    />
   </div>
 </template>
 
 <script>
 import mixinPanel from '../../common/mixinPanel'
+import executionListenerDialog from './property/executionListener'
 export default {
+  components: {
+    executionListenerDialog
+  },
   mixins: [mixinPanel],
   props: {
     users: {
@@ -25,6 +41,8 @@ export default {
         { label: '候选人员', value: 'candidateUsers' },
         { label: '候选组', value: 'candidateGroups' }
       ],
+      dialogName: '',
+      executionListenerLength: 0,
       formData: {}
     }
   },
@@ -85,6 +103,12 @@ export default {
             filterable: true,
             dic: { data: _this.groups, label: 'name', value: 'id' },
             show: !!_this.showConfig.candidateGroups && _this.formData.userType === 'candidateGroups'
+          },
+          {
+            xType: 'slot',
+            name: 'executionListener',
+            label: '执行监听器',
+            show: !!_this.showConfig.executionListener
           },
           {
             xType: 'switch',
@@ -314,8 +338,21 @@ export default {
           }
         }
         this.formData = cache
+        this.computedExecutionListenerLength()
       },
+      deep: true,
       immediate: true
+    }
+  },
+  methods: {
+    computedExecutionListenerLength() {
+      this.executionListenerLength = this.element.businessObject.extensionElements?.values?.length ?? 0
+    },
+    close() {
+      if (this.dialogName === 'executionListenerDialog') {
+        this.computedExecutionListenerLength()
+      }
+      this.dialogName = ''
     }
   }
 }
