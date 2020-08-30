@@ -128,6 +128,9 @@ export default {
     },
     async createNewDiagram(data) {
       // 将字符串转换成图显示出来
+      // xml = xml.replace(/</g, '&lt;')
+      // xml = xml.replace(/>/g, '&gt;')
+      data = data.replace(/<!\[CDATA\[(.+)]]>/g, '&lt;![CDATA[$1]]&gt;')
       try {
         await this.modeler.importXML(data)
         this.adjustPalette()

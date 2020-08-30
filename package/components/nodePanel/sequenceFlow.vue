@@ -79,6 +79,7 @@ export default {
           }
           if (key === 'conditionExpression') {
             cache[key] = cache[key].body?.replace(/<!\[CDATA\[(.+)\]\]>/, '$1')
+            cache[key] = cache[key].body?.replace(/&lt;!\[CDATA\[(.+)\]\]&gt;/, '$1')
           }
         }
         this.formData = cache

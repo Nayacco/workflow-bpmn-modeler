@@ -112,10 +112,12 @@ export default {
           let fieldType
           if ('string' in field) fieldType = 'string'
           if ('expression' in field) fieldType = 'expression'
+          let value = field[fieldType].body?.replace(/<!\[CDATA\[(.+)\]\]>/, '$1')
+          value = field[fieldType].body?.replace(/&lt;!\[CDATA\[(.+)\]\]&gt;/, '$1')
           return {
             name: field.$attrs.name,
             type: fieldType,
-            value: field[fieldType].body?.replace(/<!\[CDATA\[(.+)\]\]>/, '$1')
+            value: value
           }
         }) ?? []
       }
