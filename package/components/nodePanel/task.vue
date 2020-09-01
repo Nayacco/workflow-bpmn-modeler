@@ -11,7 +11,7 @@
       v-if="dialogName === 'executionListenerDialog'"
       :element="element"
       :modeler="modeler"
-      @close="close"
+      @close="finishExecutionListener"
     />
   </div>
 </template>
@@ -69,6 +69,11 @@ export default {
             label: '节点颜色'
           },
           {
+            xType: 'slot',
+            name: 'executionListener',
+            label: '执行监听器'
+          },
+          {
             xType: 'select',
             name: 'userType',
             label: '人员类型',
@@ -103,12 +108,6 @@ export default {
             filterable: true,
             dic: { data: _this.groups, label: 'name', value: 'id' },
             show: !!_this.showConfig.candidateGroups && _this.formData.userType === 'candidateGroups'
-          },
-          {
-            xType: 'slot',
-            name: 'executionListener',
-            label: '执行监听器',
-            show: !!_this.showConfig.executionListener
           },
           {
             xType: 'switch',
@@ -348,7 +347,7 @@ export default {
     computedExecutionListenerLength() {
       this.executionListenerLength = this.element.businessObject.extensionElements?.values?.length ?? 0
     },
-    close() {
+    finishExecutionListener() {
       if (this.dialogName === 'executionListenerDialog') {
         this.computedExecutionListenerLength()
       }

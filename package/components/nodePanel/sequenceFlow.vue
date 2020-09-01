@@ -1,13 +1,27 @@
 <template>
   <div>
-    <x-form ref="xForm" v-model="formData" :config="formConfig" />
+    <x-form ref="xForm" v-model="formData" :config="formConfig">
+      <template #executionListener>
+        <el-badge :value="executionListenerLength">
+          <el-button size="small" @click="dialogName = 'executionListenerDialog'">编辑</el-button>
+        </el-badge>
+      </template>
+    </x-form>
+    <executionListenerDialog
+      v-if="dialogName === 'executionListenerDialog'"
+      :element="element"
+      :modeler="modeler"
+      @close="finishExecutionListener"
+    />
   </div>
 </template>
 
 <script>
 import mixinPanel from '../../common/mixinPanel'
+import mixinExecutionListener from '../../common/mixinExecutionListener'
+import { parseCDATA } from '../../common/util'
 export default {
-  mixins: [mixinPanel],
+  mixins: [mixinPanel, mixinExecutionListener],
   data() {
     return {
       formData: {}
@@ -33,6 +47,11 @@ export default {
             xType: 'colorPicker',
             name: 'color',
             label: '节点颜色'
+          },
+          {
+            xType: 'slot',
+            name: 'executionListener',
+            label: '执行监听器'
           },
           {
             xType: 'input',
@@ -78,8 +97,7 @@ export default {
             delete cache[key]
           }
           if (key === 'conditionExpression') {
-            cache[key] = cache[key].body?.replace(/<!\[CDATA\[(.+)\]\]>/, '$1')
-            cache[key] = cache[key].body?.replace(/&lt;!\[CDATA\[(.+)\]\]&gt;/, '$1')
+            cache[key] = parseCDATA(cache[key].body)
           }
         }
         this.formData = cache

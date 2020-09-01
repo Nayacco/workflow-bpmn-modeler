@@ -42,7 +42,6 @@ export default {
       this.updateProperties({ name: val })
     },
     'formData.color': function(val) {
-      console.log(val)
       this.setColor({ fill: val, stroke: val })
       this.updateProperties({ color: val })
     }

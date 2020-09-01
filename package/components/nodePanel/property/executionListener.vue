@@ -12,7 +12,7 @@
       <x-form ref="xForm" v-model="formData" :config="formConfig">
         <template #params="scope">
           <el-badge :value="scope.row.params ? scope.row.params.length : 0" type="primary">
-            <el-button size="small" @click="configParam(scope.row)">配置</el-button>
+            <el-button size="small" @click="configParam(scope.$index)">配置</el-button>
           </el-badge>
         </template>
       </x-form>
@@ -20,13 +20,14 @@
         <el-button type="primary" size="medium" @click="closeDialog">确 定</el-button>
       </span>
     </el-dialog>
-    <executionListenerParam v-if="showParamDialog" :value="nowObj.params" @close="finishConfigParam" />
+    <executionListenerParam v-if="showParamDialog" :value="formData.executionListener[nowIndex].params" @close="finishConfigParam" />
   </div>
 </template>
 
 <script>
 import mixinPanel from '../../../common/mixinPanel'
 import executionListenerParam from './executionListenerParam'
+import { parseCDATA } from '../../../common/util'
 export default {
   components: { executionListenerParam },
   mixins: [mixinPanel],
@@ -34,7 +35,7 @@ export default {
     return {
       dialogVisible: true,
       showParamDialog: false,
-      nowObj: {},
+      nowIndex: null,
       formData: {
         executionListener: []
       }
@@ -112,36 +113,31 @@ export default {
           let fieldType
           if ('string' in field) fieldType = 'string'
           if ('expression' in field) fieldType = 'expression'
-          let value = field[fieldType].body?.replace(/<!\[CDATA\[(.+)\]\]>/, '$1')
-          value = field[fieldType].body?.replace(/&lt;!\[CDATA\[(.+)\]\]&gt;/, '$1')
           return {
             name: field.$attrs.name,
             type: fieldType,
-            value: value
+            value: parseCDATA(field[fieldType].body)
           }
         }) ?? []
       }
     }) ?? []
   },
-  // watch: {
-  //   element: {
-  //     handler: function(val) {
-  //     },
-  //     immediate: true
-  //   }
-  // },
   methods: {
-    configParam(obj) {
-      if (!obj.params) {
-        obj.params = []
+    configParam(index) {
+      this.nowIndex = index
+      const nowObj = this.formData.executionListener[index]
+      if (!nowObj.params) {
+        nowObj.params = []
       }
-      this.nowObj = obj
       this.showParamDialog = true
     },
     finishConfigParam(param) {
-      this.nowObj.params = param
-      this.nowObj = {}
       this.showParamDialog = false
+      // hack 数量不更新问题
+      const cache = this.formData.executionListener[this.nowIndex]
+      cache.params = param
+      this.$set(this.formData.executionListener[this.nowIndex], this.nowIndex, cache)
+      this.nowIndex = null
     },
     updateElement() {
       if (this.formData.executionListener?.length) {
@@ -156,7 +152,6 @@ export default {
         }
         this.formData.executionListener.forEach(item => {
           const executionListener = this.modeler.get('moddle').create('flowable:ExecutionListener')
-          console.log(executionListener)
           executionListener.$attrs['event'] = item.event
           executionListener.$attrs[item.type] = item.className
           if (item.params && item.params.length) {
