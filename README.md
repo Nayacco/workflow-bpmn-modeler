@@ -5,6 +5,7 @@
 ## 预览
 
 ![20200818001755](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200818001755.png)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FGoldSubmarine%2Fworkflow-bpmn-modeler.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FGoldSubmarine%2Fworkflow-bpmn-modeler?ref=badge_shield)
 
 ## 在线 demo
 
@@ -96,3 +97,6 @@ export default {
 [MIT](http://opensource.org/licenses/MIT)
 
 Copyright (c) 2020-present, charles
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FGoldSubmarine%2Fworkflow-bpmn-modeler.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FGoldSubmarine%2Fworkflow-bpmn-modeler?ref=badge_large)
