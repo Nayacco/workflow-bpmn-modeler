@@ -90,7 +90,7 @@ export default {
 <html lang="en">
   <body>
     <iframe
-      src="https://goldsubmarine.github.io/workflow-bpmn-modeler/lib/0.2.1/"
+      src="https://goldsubmarine.github.io/workflow-bpmn-modeler/cdn/0.2.1/"
       id="myFrame"
       frameborder="0"
       width="100%"
