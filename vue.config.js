@@ -1,4 +1,51 @@
 const path = require('path')
+const version = require('./package.json').version
+const fs = require('fs')
+
+const NODE_ENV = process.env.NODE_ENV
+let publicPath = '/'
+let outputDir = 'dist'
+let appFileName = 'Demo'
+if (NODE_ENV === 'demo') {
+  publicPath = 'https://cdn.jsdelivr.net/gh/goldsubmarine/workflow-bpmn-modeler@master/docs/demo/'
+  outputDir = 'docs/demo'
+  appFileName = 'Demo'
+}
+if (NODE_ENV === 'cdn') {
+  const cdnVersionList = fs.readdirSync('./docs/cdn')
+  if (cdnVersionList.includes(version)) {
+    throw new Error(`cdn 版本 ${version} 已存在`)
+  }
+  publicPath = `https://cdn.jsdelivr.net/gh/goldsubmarine/workflow-bpmn-modeler@${version}/docs/cdn/${version}/`
+  outputDir = `docs/cdn/${version}`
+  appFileName = 'Lib'
+}
+if (NODE_ENV === 'lib') {
+  const libVersionList = fs.readdirSync('./docs/lib')
+  if (libVersionList.includes(version)) {
+    throw new Error(`lib 版本 ${version} 已存在`)
+  }
+  publicPath = './'
+  outputDir = `docs/lib/${version}`
+  appFileName = 'Lib'
+}
+
+const mainFileStr = `
+import Vue from 'vue'
+import App from './${appFileName}.vue'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+
+Vue.config.productionTip = false
+
+Vue.use(ElementUI)
+
+new Vue({
+  render: h => h(App)
+}).$mount('#app')
+`
+
+fs.writeFileSync('./src/main.js', mainFileStr)
 
 const resolve = dir => {
   return path.join(__dirname, dir)
@@ -12,8 +59,8 @@ module.exports = {
       }
     }
   },
-  publicPath: process.env.NODE_ENV === 'production' ? '/workflow-bpmn-modeler/' : '/',
-  outputDir: 'docs',
+  publicPath: publicPath,
+  outputDir: outputDir,
   // tweak internal webpack configuration.
   // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
   // 如果你不需要使用eslint，把lintOnSave设为false即可
