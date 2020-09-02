@@ -25,22 +25,33 @@ export default {
     }
   },
   mounted() {
-    window.getProcess = this.$refs['refNode'].getProcess
-    window.saveXML = this.$refs['refNode'].saveXML
-    window.saveImg = this.$refs['refNode'].saveImg
+    window.addEventListener('message', event => {
+      const eventType = event.data.type
+      const eventData = event.data.data
+      if (eventType === 'set') {
+        this.set(eventData)
+      }
+      if (eventType === 'get') {
+        this.get()
+      }
+    })
   },
   methods: {
-    setXML(xml) {
-      this.xml = xml
+    set(eventData) {
+      this.xml = eventData.xml
+      this.users = eventData.users ?? []
+      this.groups = eventData.groups ?? []
+      this.categorys = eventData.categorys ?? []
     },
-    setUsers(users) {
-      this.users = users
-    },
-    setGroups(groups) {
-      this.groups = groups
-    },
-    setCategorys(categorys) {
-      this.categorys = categorys
+    async get() {
+      const process = await this.$refs['refNode'].getProcess()
+      const xml = await this.$refs['refNode'].saveXML()
+      const img = await this.$refs['refNode'].saveImg()
+      window.parent.postMessage({
+        process: process,
+        xml: xml,
+        img: img
+      }, '*')
     }
   }
 }
