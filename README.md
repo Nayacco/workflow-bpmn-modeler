@@ -83,14 +83,14 @@ export default {
 
 当然你也可以在 `docs/lib` 文件夹下下载对应的版本，进行本地部署。
 
-集成方式如下：
+集成方式如下（ps：可直接拷贝以下代码到一个html文件中试一下）：
 
 ```html
 <!DOCTYPE html>
 <html lang="en">
   <body>
     <iframe
-      src="https://goldsubmarine.github.io/workflow-bpmn-modeler/lib/0.2.0/"
+      src="https://goldsubmarine.github.io/workflow-bpmn-modeler/lib/0.2.1/"
       id="myFrame"
       frameborder="0"
       width="100%"
