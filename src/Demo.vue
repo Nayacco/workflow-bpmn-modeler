@@ -6,6 +6,7 @@
       :users="users"
       :groups="groups"
       :categorys="categorys"
+      :is-view="false"
     />
     <el-button type="primary" @click="save">保存</el-button>
   </div>
@@ -60,7 +61,7 @@ export default {
 
 <style lang="scss">
 html, body, #app {
-  height: 100%;
+  height: 650px;
   margin: 0;
 }
 </style>

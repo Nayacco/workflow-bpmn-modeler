@@ -1,6 +1,6 @@
 <template>
-  <div class="flow-containers">
-    <el-container>
+  <div v-loading="isView" class="flow-containers" :class="{ 'view-mode': isView }">
+    <el-container style="height: 100%">
       <el-header style="border-bottom: 1px solid rgb(218 218 218);height: auto;">
         <div style="display: flex; padding: 10px 0px; justify-content: space-between;">
           <div>
@@ -76,6 +76,10 @@ export default {
     categorys: {
       type: Array,
       default: () => []
+    },
+    isView: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -111,7 +115,6 @@ export default {
     } else {
       this.createNewDiagram(this.xml)
     }
-    this.fitViewport()
   },
   methods: {
     newDiagram() {
@@ -120,6 +123,19 @@ export default {
     // 让图能自适应屏幕
     fitViewport() {
       this.zoom = this.modeler.get('canvas').zoom('fit-viewport')
+      const bbox = document.querySelector('.flow-containers .viewport').getBBox()
+      const currentViewbox = this.modeler.get('canvas').viewbox()
+      const elementMid = {
+        x: bbox.x + bbox.width / 2,
+        y: bbox.y + bbox.height / 2
+      }
+      this.modeler.get('canvas').viewbox({
+        x: elementMid.x - currentViewbox.width / 2,
+        y: elementMid.y - currentViewbox.height / 2,
+        width: currentViewbox.width,
+        height: currentViewbox.height
+      })
+      this.zoom = bbox.width / currentViewbox.width * 1.8
     },
     // 放大缩小
     zoomViewport(zoomIn = true) {
@@ -134,6 +150,7 @@ export default {
       try {
         await this.modeler.importXML(data)
         this.adjustPalette()
+        this.fitViewport()
         // this.fillColor()
       } catch (err) {
         console.error(err.message, err.warnings)
@@ -302,6 +319,17 @@ export default {
 @import "~bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
 @import "~bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css";
 @import "~bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
+.view-mode {
+  .el-header, .el-aside, .djs-palette, .bjs-powered-by {
+    display: none;
+  }
+  .el-loading-mask {
+    background-color: initial;
+  }
+  .el-loading-spinner {
+    display: none;
+  }
+}
 .flow-containers {
   // background-color: #ffffff;
   width: 100%;
@@ -309,8 +337,6 @@ export default {
   .canvas {
     width: 100%;
     height: 100%;
-    min-height: 580px;
-    // margin: 0 400px 0 0;
   }
   .panel {
     position: absolute;

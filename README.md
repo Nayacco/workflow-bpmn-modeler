@@ -28,6 +28,7 @@ yarn add workflow-bpmn-modeler
       :users="users"
       :groups="groups"
       :categorys="categorys"
+      :is-view="false"
     />
     <el-button type="primary" @click="save">保存</el-button>
   </div>
@@ -123,6 +124,7 @@ export default {
               { name: "OA1", id: "oa" },
               { name: "财务1", id: "finance" },
             ],
+            isView: false
           },
         }
         // 设置初始化值
