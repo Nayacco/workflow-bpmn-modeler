@@ -6,9 +6,20 @@
           <el-button size="small" @click="dialogName = 'executionListenerDialog'">编辑</el-button>
         </el-badge>
       </template>
+      <template #signal>
+        <el-badge :value="signalLength">
+          <el-button size="small" @click="dialogName = 'signalDialog'">编辑</el-button>
+        </el-badge>
+      </template>
     </x-form>
     <executionListenerDialog
       v-if="dialogName === 'executionListenerDialog'"
+      :element="element"
+      :modeler="modeler"
+      @close="finishExecutionListener"
+    />
+    <signalDialog
+      v-if="dialogName === 'signalDialog'"
       :element="element"
       :modeler="modeler"
       @close="finishExecutionListener"
@@ -19,10 +30,15 @@
 <script>
 import mixinPanel from '../../common/mixinPanel'
 import mixinExecutionListener from '../../common/mixinExecutionListener'
+import signalDialog from './property/signal'
 export default {
+  components: {
+    signalDialog
+  },
   mixins: [mixinPanel, mixinExecutionListener],
   data() {
     return {
+      signalLength: 0,
       formData: {}
     }
   },
@@ -58,6 +74,11 @@ export default {
             xType: 'slot',
             name: 'executionListener',
             label: '执行监听器'
+          },
+          {
+            xType: 'slot',
+            name: 'signal',
+            label: '信号定义'
           }
         ]
       }
@@ -88,6 +109,17 @@ export default {
         this.formData = cache
       },
       immediate: true
+    }
+  },
+  methods: {
+    computedSignalLength() {
+      this.signalLength = this.element.businessObject.extensionElements?.values?.length ?? 0
+    },
+    finishSignal() {
+      if (this.dialogName === 'signalDialog') {
+        this.computedSignalLength()
+      }
+      this.dialogName = ''
     }
   }
 }
