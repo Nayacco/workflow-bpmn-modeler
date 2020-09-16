@@ -1,15 +1,17 @@
 {
   "name": "workflow-bpmn-modeler",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "基于 `vue` 和 `bpmn.io@7.0` ，实现 flowable 的 modeler 模型设计器",
-  "main": "package/index.vue",
+  "main": "dist/workflow-bpmn-modeler.umd.min.js",
   "scripts": {
     "dev": "vue-cli-service serve --open",
-    "demo": "vue-cli-service build --mode=demo",
-    "lib": "vue-cli-service build --mode=lib",
-    "cdn": "vue-cli-service build --mode=cdn",
+    "demo": "cross-env NODE_ENV=demo vue-cli-service build",
+    "lib": "cross-env NODE_ENV=lib vue-cli-service build",
+    "cdn": "cross-env NODE_ENV=cdn vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "postpublish": "yarn lib && yarn cdn"
+    "build": "cross-env NODE_ENV=build vue-cli-service build --target lib --inline-vue --entry package/index.js",
+    "prepublish": "yarn build",
+    "postpublish": "yarn lib && yarn cdn && yarn demo"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -36,13 +38,14 @@
     "bpmn-js": "^7.2.1",
     "element-ui": "^2.12.0",
     "vue": "^2.6.10",
-    "xcrud": "0.3.19"
+    "xcrud": "0.4.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.4.6",
     "@vue/cli-plugin-eslint": "^4.4.6",
     "@vue/cli-service": "^4.4.6",
     "babel-eslint": "^10.1.0",
+    "cross-env": "^7.0.2",
     "eslint": "^7.5.0",
     "eslint-plugin-vue": "^6.2.2",
     "sass": "^1.26.10",
@@ -50,8 +53,8 @@
     "vue-template-compiler": "^2.6.11"
   },
   "files": [
+    "dist",
     "package",
-    "docs",
     "README.md",
     "CHANGELOG.md",
     "LICENSE"

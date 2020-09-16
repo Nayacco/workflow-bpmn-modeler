@@ -57,6 +57,7 @@ import getInitStr from './flowable/init'
 // 引入flowable的节点文件
 import flowableModdle from './flowable/flowable.json'
 export default {
+  name: 'WorkflowBpmnModeler',
   components: {
     panel
   },
