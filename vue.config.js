@@ -3,12 +3,11 @@ const version = require('./package.json').version
 const fs = require('fs')
 
 const NODE_ENV = process.env.NODE_ENV
-console.log(NODE_ENV)
 let publicPath = '/'
 let outputDir = 'dist'
 let appFileName = 'Demo'
 if (NODE_ENV === 'demo') {
-  publicPath = 'https://cdn.jsdelivr.net/gh/goldsubmarine/workflow-bpmn-modeler@master/docs/demo/'
+  publicPath = '/workflow-bpmn-modeler/demo/'
   outputDir = 'docs/demo'
   appFileName = 'Demo'
 }

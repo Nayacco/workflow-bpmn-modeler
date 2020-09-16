@@ -137,7 +137,7 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "https://cdn.jsdelivr.net/gh/goldsubmarine/workflow-bpmn-modeler@master/docs/demo/";
+/******/ 	__webpack_require__.p = "/workflow-bpmn-modeler/demo/";
 /******/
 /******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
 /******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
