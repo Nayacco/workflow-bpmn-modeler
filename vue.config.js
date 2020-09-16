@@ -3,6 +3,7 @@ const version = require('./package.json').version
 const fs = require('fs')
 
 const NODE_ENV = process.env.NODE_ENV
+console.log(NODE_ENV)
 let publicPath = '/'
 let outputDir = 'dist'
 let appFileName = 'Demo'
@@ -70,7 +71,7 @@ module.exports = {
       .set('views', resolve('src/views'))
 
     config
-      .when(process.env.NODE_ENV !== 'development',
+      .when(NODE_ENV !== 'development' && NODE_ENV !== 'build',
         config => {
           config
             .optimization.splitChunks({
