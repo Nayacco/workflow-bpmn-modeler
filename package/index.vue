@@ -128,7 +128,7 @@ export default {
       const bbox = document.querySelector('.flow-containers .viewport').getBBox()
       const currentViewbox = this.modeler.get('canvas').viewbox()
       const elementMid = {
-        x: bbox.x + bbox.width / 2,
+        x: bbox.x + bbox.width / 2 - 65,
         y: bbox.y + bbox.height / 2
       }
       this.modeler.get('canvas').viewbox({
