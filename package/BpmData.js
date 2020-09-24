@@ -48,7 +48,8 @@ export default class BpmData {
       {
         action: 'create.data-store',
         title: '数据存储'
-      }, {
+      },
+      {
         action: 'create.participant-expanded',
         title: '扩展流程'
       },

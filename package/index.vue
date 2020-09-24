@@ -31,6 +31,7 @@
           <div>
             <el-button size="mini" icon="el-icon-download" @click="saveXML(true)">下载xml</el-button>
             <el-button size="mini" icon="el-icon-picture" @click="saveImg('svg', true)">下载svg</el-button>
+            <el-button size="mini" type="primary" @click="save">保存模型</el-button>
           </div>
         </div>
       </el-header>
@@ -38,7 +39,7 @@
         <el-main style="padding: 0;">
           <div ref="canvas" class="canvas" />
         </el-main>
-        <el-aside style="width: 400px; background-color: #f0f2f5">
+        <el-aside style="width: 400px; min-height: 580px; background-color: #f0f2f5">
           <panel v-if="modeler" :modeler="modeler" :users="users" :groups="groups" :categorys="categorys" />
         </el-aside>
       </el-container>
@@ -293,6 +294,12 @@ export default {
       } catch (err) {
         console.log(err)
       }
+    },
+    async save() {
+      const process = this.getProcess()
+      const xml = await this.saveXML()
+      const svg = await this.saveImg()
+      this.$emit('save', { process, xml, svg })
     },
     openBpmn(file) {
       const reader = new FileReader()

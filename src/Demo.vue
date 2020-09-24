@@ -7,8 +7,8 @@
       :groups="groups"
       :categorys="categorys"
       :is-view="false"
+      @save="saveModeler"
     />
-    <el-button type="primary" @click="save">保存</el-button>
   </div>
 </template>
 
@@ -49,11 +49,8 @@ export default {
           this.xml = xml
         })
     },
-    async save() {
-      const processModel = this.$refs['refNode'].getProcess()
-      const xml = await this.$refs['refNode'].saveXML()
-      const svg = await this.$refs['refNode'].saveImg()
-      console.log(processModel, xml, svg)
+    saveModeler(data) {
+      console.log(data)
     }
   }
 }
@@ -61,7 +58,7 @@ export default {
 
 <style lang="scss">
 html, body, #app {
-  height: 650px;
+  // height: 650px;
   margin: 0;
 }
 </style>
