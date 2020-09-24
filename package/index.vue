@@ -299,7 +299,9 @@ export default {
       const process = this.getProcess()
       const xml = await this.saveXML()
       const svg = await this.saveImg()
-      this.$emit('save', { process, xml, svg })
+      const result = { process, xml, svg }
+      this.$emit('save', result)
+      window.parent.postMessage(result, '*')
     },
     openBpmn(file) {
       const reader = new FileReader()

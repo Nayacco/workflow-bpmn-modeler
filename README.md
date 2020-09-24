@@ -29,8 +29,8 @@ yarn add workflow-bpmn-modeler
       :groups="groups"
       :categorys="categorys"
       :is-view="false"
+      @save="save"
     />
-    <el-button type="primary" @click="save">保存</el-button>
   </div>
 </template>
 
@@ -65,11 +65,8 @@ export default {
       // 发送请求，获取xml
       // this.xml = response.xml
     },
-    async save() {
-      const processModel = this.$refs["refNode"].getProcess();
-      const xml = await this.$refs["refNode"].saveXML();
-      const svg = await this.$refs["refNode"].saveImg();
-      console.log(processModel, xml, svg);
+    save(data) {
+      console.log(data);  // { process: {...}, xml: '...', svg: '...' }
     },
   },
 };
@@ -97,7 +94,6 @@ export default {
       width="100%"
       height="800px">
     </iframe>
-    <button onclick="myFrame.contentWindow.postMessage({type: 'get'}, '*')">获取流程的信息</button>
 
     <script>
       let myFrame = document.getElementById("myFrame");
@@ -107,25 +103,22 @@ export default {
       });
       myFrame.onload = () => {
         let postMsg = {
-          type: "set",
-          data: {
-            xml: "", // 后端查询到的xml，新建则为空串
-            users: [
-              { name: "张三1", id: "zhangsan" },
-              { name: "李四1", id: "lisi" },
-              { name: "王五1", id: "wangwu" },
-            ],
-            groups: [
-              { name: "web组1", id: "web" },
-              { name: "java组1", id: "java" },
-              { name: "python组1", id: "python" },
-            ],
-            categorys: [
-              { name: "OA1", id: "oa" },
-              { name: "财务1", id: "finance" },
-            ],
-            isView: false
-          },
+          xml: "", // 后端查询到的xml，新建则为空串
+          users: [
+            { name: "张三1", id: "zhangsan" },
+            { name: "李四1", id: "lisi" },
+            { name: "王五1", id: "wangwu" },
+          ],
+          groups: [
+            { name: "web组1", id: "web" },
+            { name: "java组1", id: "java" },
+            { name: "python组1", id: "python" },
+          ],
+          categorys: [
+            { name: "OA1", id: "oa" },
+            { name: "财务1", id: "finance" },
+          ],
+          isView: false
         }
         // 设置初始化值
         myFrame.contentWindow.postMessage(postMsg, "*")

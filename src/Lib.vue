@@ -26,14 +26,7 @@ export default {
   },
   mounted() {
     window.addEventListener('message', event => {
-      const eventType = event.data.type
-      const eventData = event.data.data
-      if (eventType === 'set') {
-        this.set(eventData)
-      }
-      if (eventType === 'get') {
-        this.get()
-      }
+      this.set(event.data)
     })
   },
   methods: {
@@ -42,16 +35,6 @@ export default {
       this.users = eventData.users ?? []
       this.groups = eventData.groups ?? []
       this.categorys = eventData.categorys ?? []
-    },
-    async get() {
-      const process = await this.$refs['refNode'].getProcess()
-      const xml = await this.$refs['refNode'].saveXML()
-      const img = await this.$refs['refNode'].saveImg()
-      window.parent.postMessage({
-        process: process,
-        xml: xml,
-        img: img
-      }, '*')
     }
   }
 }
