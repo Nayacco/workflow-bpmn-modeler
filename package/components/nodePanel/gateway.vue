@@ -50,7 +50,7 @@ export default {
           {
             xType: 'slot',
             name: 'executionListener',
-            label: '执行监听器'
+            label: '任务监听器'
           },
           {
             xType: 'switch',

@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dialog
-      title="执行监听器"
+      title="任务监听器"
       :visible.sync="dialogVisible"
       width="900px"
       :close-on-click-modal="false"
@@ -51,7 +51,7 @@ export default {
             xType: 'tabs',
             tabs: [
               {
-                label: '执行监听器',
+                label: '任务监听器',
                 name: 'executionListener',
                 column: [
                   {
