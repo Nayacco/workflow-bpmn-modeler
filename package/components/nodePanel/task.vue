@@ -6,6 +6,11 @@
           <el-button size="small" @click="dialogName = 'executionListenerDialog'">编辑</el-button>
         </el-badge>
       </template>
+      <template #multiInstance>
+        <el-badge :is-dot="hasMultiInstance">
+          <el-button size="small" @click="dialogName = 'multiInstanceDialog'">编辑</el-button>
+        </el-badge>
+      </template>
     </x-form>
     <executionListenerDialog
       v-if="dialogName === 'executionListenerDialog'"
@@ -13,15 +18,23 @@
       :modeler="modeler"
       @close="finishExecutionListener"
     />
+    <multiInstanceDialog
+      v-if="dialogName === 'multiInstanceDialog'"
+      :element="element"
+      :modeler="modeler"
+      @close="finishMultiInstance"
+    />
   </div>
 </template>
 
 <script>
 import mixinPanel from '../../common/mixinPanel'
 import executionListenerDialog from './property/executionListener'
+import multiInstanceDialog from './property/multiInstance'
 export default {
   components: {
-    executionListenerDialog
+    executionListenerDialog,
+    multiInstanceDialog
   },
   mixins: [mixinPanel],
   props: {
@@ -43,6 +56,7 @@ export default {
       ],
       dialogName: '',
       executionListenerLength: 0,
+      hasMultiInstance: false,
       formData: {}
     }
   },
@@ -108,6 +122,11 @@ export default {
             filterable: true,
             dic: { data: _this.groups, label: 'name', value: 'id' },
             show: !!_this.showConfig.candidateGroups && _this.formData.userType === 'candidateGroups'
+          },
+          {
+            xType: 'slot',
+            name: 'multiInstance',
+            label: '多实例'
           },
           {
             xType: 'switch',
@@ -338,6 +357,7 @@ export default {
         }
         this.formData = cache
         this.computedExecutionListenerLength()
+        this.computedHasMultiInstance()
       },
       deep: true,
       immediate: true
@@ -347,9 +367,22 @@ export default {
     computedExecutionListenerLength() {
       this.executionListenerLength = this.element.businessObject.extensionElements?.values?.length ?? 0
     },
+    computedHasMultiInstance() {
+      if (this.element.businessObject.multiInstanceLoopCharacteristics) {
+        this.hasMultiInstance = true
+      } else {
+        this.hasMultiInstance = false
+      }
+    },
     finishExecutionListener() {
       if (this.dialogName === 'executionListenerDialog') {
         this.computedExecutionListenerLength()
+      }
+      this.dialogName = ''
+    },
+    finishMultiInstance() {
+      if (this.dialogName === 'multiInstanceDialog') {
+        this.computedHasMultiInstance()
       }
       this.dialogName = ''
     }

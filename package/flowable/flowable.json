@@ -212,6 +212,10 @@
           {
             "name": "timerEventDefinition",
             "type": "Expression"
+          },
+          {
+            "name": "multiInstanceLoopCharacteristics",
+            "type": "MultiInstanceLoopCharacteristics"
           }
         ]
       },
