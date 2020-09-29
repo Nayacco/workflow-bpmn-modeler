@@ -262,95 +262,56 @@ export default {
       this.updateProperties({ 'flowable:candidateGroups': val?.join(',') })
     },
     'formData.async': function(val) {
-      if (val) {
-        this.updateProperties({ 'flowable:async': true })
-      } else {
-        delete this.element.businessObject.$attrs[`flowable:async`]
-      }
+      if (val === '') val = null
+      this.updateProperties({ 'flowable:async': true })
     },
     'formData.dueDate': function(val) {
-      if (val) {
-        this.updateProperties({ 'flowable:dueDate': val })
-      } else {
-        delete this.element.businessObject.$attrs[`flowable:dueDate`]
-      }
+      if (val === '') val = null
+      this.updateProperties({ 'flowable:dueDate': val })
     },
     'formData.formKey': function(val) {
-      if (val) {
-        this.updateProperties({ 'flowable:formKey': val })
-      } else {
-        delete this.element.businessObject.$attrs[`flowable:formKey`]
-      }
+      if (val === '') val = null
+      this.updateProperties({ 'flowable:formKey': val })
     },
     'formData.priority': function(val) {
-      if (val) {
-        this.updateProperties({ 'flowable:priority': val })
-      } else {
-        delete this.element.businessObject.$attrs[`flowable:priority`]
-      }
+      if (val === '') val = null
+      this.updateProperties({ 'flowable:priority': val })
     },
     'formData.skipExpression': function(val) {
-      if (val) {
-        this.updateProperties({ 'flowable:skipExpression': val })
-      } else {
-        delete this.element.businessObject.$attrs[`flowable:skipExpression`]
-      }
+      if (val === '') val = null
+      this.updateProperties({ 'flowable:skipExpression': val })
     },
     'formData.isForCompensation': function(val) {
-      if (val) {
-        this.updateProperties({ 'isForCompensation': true })
-      } else {
-        delete this.element.businessObject[`isForCompensation`]
-      }
+      if (val === '') val = null
+      this.updateProperties({ 'isForCompensation': val })
     },
     'formData.triggerable': function(val) {
-      if (val) {
-        this.updateProperties({ 'flowable:triggerable': true })
-      } else {
-        delete this.element.businessObject.$attrs[`flowable:triggerable`]
-      }
+      if (val === '') val = null
+      this.updateProperties({ 'flowable:triggerable': val })
     },
     'formData.class': function(val) {
-      if (val) {
-        this.updateProperties({ 'flowable:class': val })
-      } else {
-        delete this.element.businessObject.$attrs[`flowable:class`]
-      }
+      if (val === '') val = null
+      this.updateProperties({ 'flowable:class': val })
     },
     'formData.autoStoreVariables': function(val) {
-      if (val) {
-        this.updateProperties({ 'flowable:autoStoreVariables': true })
-      } else {
-        delete this.element.businessObject.$attrs[`flowable:autoStoreVariables`]
-      }
+      if (val === '') val = null
+      this.updateProperties({ 'flowable:autoStoreVariables': val })
     },
     'formData.exclude': function(val) {
-      if (val) {
-        this.updateProperties({ 'flowable:exclude': true })
-      } else {
-        delete this.element.businessObject.$attrs[`flowable:exclude`]
-      }
+      if (val === '') val = null
+      this.updateProperties({ 'flowable:exclude': val })
     },
     'formData.ruleVariablesInput': function(val) {
-      if (val) {
-        this.updateProperties({ 'flowable:ruleVariablesInput': val })
-      } else {
-        delete this.element.businessObject.$attrs[`flowable:ruleVariablesInput`]
-      }
+      if (val === '') val = null
+      this.updateProperties({ 'flowable:ruleVariablesInput': val })
     },
     'formData.rules': function(val) {
-      if (val) {
-        this.updateProperties({ 'flowable:rules': val })
-      } else {
-        delete this.element.businessObject.$attrs[`flowable:rules`]
-      }
+      if (val === '') val = null
+      this.updateProperties({ 'flowable:rules': val })
     },
     'formData.resultVariable': function(val) {
-      if (val) {
-        this.updateProperties({ 'flowable:resultVariable': val })
-      } else {
-        delete this.element.businessObject.$attrs[`flowable:resultVariable`]
-      }
+      if (val === '') val = null
+      this.updateProperties({ 'flowable:resultVariable': val })
     },
     element: {
       handler: function(val) {

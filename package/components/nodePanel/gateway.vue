@@ -65,11 +65,8 @@ export default {
   },
   watch: {
     'formData.async': function(val) {
-      if (val) {
-        this.updateProperties({ 'flowable:async': true })
-      } else {
-        delete this.element.businessObject.$attrs[`flowable:async`]
-      }
+      if (val === '') val = null
+      this.updateProperties({ 'flowable:async': val })
     },
     element: {
       handler: function(val) {

@@ -73,15 +73,12 @@ export default {
         const newCondition = this.modeler.get('moddle').create('bpmn:FormalExpression', { body: `<![CDATA[${val}]]>` })
         this.updateProperties({ conditionExpression: newCondition })
       } else {
-        delete this.element.businessObject[`conditionExpression`]
+        this.updateProperties({ conditionExpression: null })
       }
     },
     'formData.skipExpression': function(val) {
-      if (val) {
-        this.updateProperties({ 'flowable:skipExpression': val })
-      } else {
-        delete this.element.businessObject.$attrs[`flowable:skipExpression`]
-      }
+      if (val === '') val = null
+      this.updateProperties({ 'flowable:skipExpression': val })
     },
     element: {
       handler: function(val) {

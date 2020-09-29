@@ -71,18 +71,12 @@ export default {
   },
   watch: {
     'formData.initiator': function(val) {
-      if (val) {
-        this.updateProperties({ 'flowable:initiator': val })
-      } else {
-        delete this.element.businessObject.$attrs[`flowable:initiator`]
-      }
+      if (val === '') val = null
+      this.updateProperties({ 'flowable:initiator': val })
     },
     'formData.formKey': function(val) {
-      if (val) {
-        this.updateProperties({ 'flowable:formKey': val })
-      } else {
-        delete this.element.businessObject.$attrs[`flowable:formKey`]
-      }
+      if (val === '') val = null
+      this.updateProperties({ 'flowable:formKey': val })
     },
     element: {
       handler: function(val) {

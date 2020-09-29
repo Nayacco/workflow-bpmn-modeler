@@ -86,11 +86,8 @@ export default {
   },
   watch: {
     'formData.processCategory': function(val) {
-      if (val) {
-        this.updateProperties({ 'flowable:processCategory': val })
-      } else {
-        delete this.element.businessObject.$attrs['flowable:processCategory']
-      }
+      if (val === '') val = null
+      this.updateProperties({ 'flowable:processCategory': val })
     },
     element: {
       handler: function(val) {
