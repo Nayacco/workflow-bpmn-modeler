@@ -6,6 +6,7 @@
       :users="users"
       :groups="groups"
       :categorys="categorys"
+      :is-view="isView"
     />
   </div>
 </template>
@@ -21,7 +22,8 @@ export default {
       xml: '', // 后端查询到的xml
       users: [],
       groups: [],
-      categorys: []
+      categorys: [],
+      isView: false
     }
   },
   mounted() {
@@ -35,6 +37,7 @@ export default {
       this.users = eventData.users ?? []
       this.groups = eventData.groups ?? []
       this.categorys = eventData.categorys ?? []
+      this.isView = eventData.isView ?? false
     }
   }
 }
