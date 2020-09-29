@@ -78,9 +78,9 @@ export default {
     },
     'formData.skipExpression': function(val) {
       if (val) {
-        this.updateProperties({ 'skipExpression': val })
+        this.updateProperties({ 'flowable:skipExpression': val })
       } else {
-        delete this.element.businessObject.$attrs[`skipExpression`]
+        delete this.element.businessObject.$attrs[`flowable:skipExpression`]
       }
     },
     element: {

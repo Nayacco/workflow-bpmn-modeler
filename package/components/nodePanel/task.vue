@@ -300,7 +300,7 @@ export default {
       if (val) {
         this.updateProperties({ 'isForCompensation': true })
       } else {
-        delete this.element.businessObject.$attrs[`isForCompensation`]
+        delete this.element.businessObject[`isForCompensation`]
       }
     },
     'formData.triggerable': function(val) {
