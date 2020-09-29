@@ -54,7 +54,7 @@ export default {
                     rules: [{ required: true, message: '请选择', trigger: ['blur', 'change'] }],
                     xType: 'select',
                     dic: [
-                      { label: '字符串', value: 'string' },
+                      { label: '字符串', value: 'stringValue' },
                       { label: '表达式', value: 'expression' }
                     ]
                   },

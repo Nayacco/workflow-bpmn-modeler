@@ -735,11 +735,17 @@
           },
           {
             "name": "expression",
+            "isAttr": true,
             "type": "expression"
           },
           {
             "name": "string",
             "type": "string"
+          },
+          {
+            "name": "stringValue",
+            "isAttr": true,
+            "type": "String"
           }
         ]
       },

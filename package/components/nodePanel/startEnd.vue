@@ -51,7 +51,7 @@ export default {
           {
             xType: 'slot',
             name: 'executionListener',
-            label: '任务监听器'
+            label: '执行监听器'
           },
           {
             xType: 'input',
