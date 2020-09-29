@@ -13,7 +13,8 @@ export default {
     priority: true,
     formKey: true,
     skipExpression: true,
-    dueDate: true
+    dueDate: true,
+    taskListener: true
   },
   'bpmn:ServiceTask': {
     async: true,

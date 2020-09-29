@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dialog
-      title="执行监听器"
+      title="任务监听器"
       :visible.sync="dialogVisible"
       width="900px"
       :close-on-click-modal="false"
@@ -20,7 +20,7 @@
         <el-button type="primary" size="medium" @click="closeDialog">确 定</el-button>
       </span>
     </el-dialog>
-    <listenerParam v-if="showParamDialog" :value="formData.executionListener[nowIndex].params" @close="finishConfigParam" />
+    <listenerParam v-if="showParamDialog" :value="formData.taskListener[nowIndex].params" @close="finishConfigParam" />
   </div>
 </template>
 
@@ -36,7 +36,7 @@ export default {
       showParamDialog: false,
       nowIndex: null,
       formData: {
-        executionListener: []
+        taskListener: []
       }
     }
   },
@@ -50,8 +50,8 @@ export default {
             xType: 'tabs',
             tabs: [
               {
-                label: '执行监听器',
-                name: 'executionListener',
+                label: '任务监听器',
+                name: 'taskListener',
                 column: [
                   {
                     label: '事件',
@@ -60,10 +60,16 @@ export default {
                     rules: [{ required: true, message: '请选择', trigger: ['blur', 'change'] }],
                     xType: 'select',
                     dic: [
-                      { label: 'start', value: 'start' },
-                      { label: 'end', value: 'end' },
-                      { label: 'take', value: 'take' }
-                    ]
+                      { label: 'create', value: 'create' },
+                      { label: 'assignment', value: 'assignment' },
+                      { label: 'complete', value: 'complete' },
+                      { label: 'delete', value: 'delete' }
+                    ],
+                    tooltip: `create（创建）：当任务已经创建，并且所有任务参数都已经设置时触发。<br />
+                              assignment（指派）：当任务已经指派给某人时触发。请注意：当流程执行到达用户任务时，在触发create事件之前，会首先触发assignment事件。<br />
+                              complete（完成）：当任务已经完成，从运行时数据中删除前触发。<br />
+                              delete（删除）：在任务即将被删除前触发。请注意任务由completeTask正常完成时也会触发。
+                    `
                   },
                   {
                     label: '类型',
@@ -75,11 +81,7 @@ export default {
                       { label: '类', value: 'class' },
                       { label: '表达式', value: 'expression' },
                       { label: '委托表达式', value: 'delegateExpression' }
-                    ],
-                    tooltip: `类：示例 com.company.MyCustomListener，自定义类必须实现 org.flowable.engine.delegate.TaskListener 接口 <br />
-                              表达式：示例 \${myObject.callMethod(task, task.eventName)} <br />
-                              委托表达式：示例 \${myListenerSpringBean} ，该 springBean 需要实现 org.flowable.engine.delegate.TaskListener 接口
-                    `
+                    ]
                   },
                   {
                     label: 'java 类名',
@@ -103,8 +105,8 @@ export default {
     }
   },
   mounted() {
-    this.formData.executionListener = this.element.businessObject.extensionElements?.values
-      .filter(item => item.$type === 'flowable:ExecutionListener')
+    this.formData.taskListener = this.element.businessObject.extensionElements?.values
+      .filter(item => item.$type === 'flowable:TaskListener')
       .map(item => {
         let type
         if ('class' in item) type = 'class'
@@ -130,7 +132,7 @@ export default {
   methods: {
     configParam(index) {
       this.nowIndex = index
-      const nowObj = this.formData.executionListener[index]
+      const nowObj = this.formData.taskListener[index]
       if (!nowObj.params) {
         nowObj.params = []
       }
@@ -139,23 +141,23 @@ export default {
     finishConfigParam(param) {
       this.showParamDialog = false
       // hack 数量不更新问题
-      const cache = this.formData.executionListener[this.nowIndex]
+      const cache = this.formData.taskListener[this.nowIndex]
       cache.params = param
-      this.$set(this.formData.executionListener[this.nowIndex], this.nowIndex, cache)
+      this.$set(this.formData.taskListener[this.nowIndex], this.nowIndex, cache)
       this.nowIndex = null
     },
     updateElement() {
-      if (this.formData.executionListener?.length) {
+      if (this.formData.taskListener?.length) {
         let extensionElements = this.element.businessObject.get('extensionElements')
         if (!extensionElements) {
           extensionElements = this.modeler.get('moddle').create('bpmn:ExtensionElements')
         }
         // 清除旧值
-        extensionElements.values = extensionElements.values?.filter(item => item.$type !== 'flowable:ExecutionListener') ?? []
-        this.formData.executionListener.forEach(item => {
-          const executionListener = this.modeler.get('moddle').create('flowable:ExecutionListener')
-          executionListener['event'] = item.event
-          executionListener[item.type] = item.className
+        extensionElements.values = extensionElements.values?.filter(item => item.$type !== 'flowable:TaskListener') ?? []
+        this.formData.taskListener.forEach(item => {
+          const taskListener = this.modeler.get('moddle').create('flowable:TaskListener')
+          taskListener['event'] = item.event
+          taskListener[item.type] = item.className
           if (item.params && item.params.length) {
             item.params.forEach(field => {
               const fieldElement = this.modeler.get('moddle').create('flowable:Field')
@@ -164,16 +166,16 @@ export default {
               // 注意：flowable.json 中定义的string和expression类为小写，不然会和原生的String类冲突，此处为hack
               // const valueElement = this.modeler.get('moddle').create(`flowable:${field.type}`, { body: `<![CDATA[${field.value}]]>` })
               // fieldElement[field.type] = valueElement
-              executionListener.get('fields').push(fieldElement)
+              taskListener.get('fields').push(fieldElement)
             })
           }
-          extensionElements.get('values').push(executionListener)
+          extensionElements.get('values').push(taskListener)
         })
         this.updateProperties({ extensionElements: extensionElements })
       } else {
         const extensionElements = this.element.businessObject[`extensionElements`]
         if (extensionElements) {
-          extensionElements.values = extensionElements.values?.filter(item => item.$type !== 'flowable:ExecutionListener') ?? []
+          extensionElements.values = extensionElements.values?.filter(item => item.$type !== 'flowable:TaskListener') ?? []
         }
       }
     },

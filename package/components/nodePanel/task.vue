@@ -6,6 +6,11 @@
           <el-button size="small" @click="dialogName = 'executionListenerDialog'">编辑</el-button>
         </el-badge>
       </template>
+      <template #taskListener>
+        <el-badge :value="taskListenerLength">
+          <el-button size="small" @click="dialogName = 'taskListenerDialog'">编辑</el-button>
+        </el-badge>
+      </template>
       <template #multiInstance>
         <el-badge :is-dot="hasMultiInstance">
           <el-button size="small" @click="dialogName = 'multiInstanceDialog'">编辑</el-button>
@@ -17,6 +22,12 @@
       :element="element"
       :modeler="modeler"
       @close="finishExecutionListener"
+    />
+    <taskListenerDialog
+      v-if="dialogName === 'taskListenerDialog'"
+      :element="element"
+      :modeler="modeler"
+      @close="finishTaskListener"
     />
     <multiInstanceDialog
       v-if="dialogName === 'multiInstanceDialog'"
@@ -30,10 +41,12 @@
 <script>
 import mixinPanel from '../../common/mixinPanel'
 import executionListenerDialog from './property/executionListener'
+import taskListenerDialog from './property/taskListener'
 import multiInstanceDialog from './property/multiInstance'
 export default {
   components: {
     executionListenerDialog,
+    taskListenerDialog,
     multiInstanceDialog
   },
   mixins: [mixinPanel],
@@ -56,6 +69,7 @@ export default {
       ],
       dialogName: '',
       executionListenerLength: 0,
+      taskListenerLength: 0,
       hasMultiInstance: false,
       formData: {}
     }
@@ -86,6 +100,12 @@ export default {
             xType: 'slot',
             name: 'executionListener',
             label: '执行监听器'
+          },
+          {
+            xType: 'slot',
+            name: 'taskListener',
+            label: '任务监听器',
+            show: !!_this.showConfig.taskListener
           },
           {
             xType: 'select',
@@ -357,6 +377,7 @@ export default {
         }
         this.formData = cache
         this.computedExecutionListenerLength()
+        this.computedTaskListenerLength()
         this.computedHasMultiInstance()
       },
       deep: true,
@@ -365,7 +386,12 @@ export default {
   },
   methods: {
     computedExecutionListenerLength() {
-      this.executionListenerLength = this.element.businessObject.extensionElements?.values?.length ?? 0
+      this.executionListenerLength = this.element.businessObject.extensionElements?.values
+        ?.filter(item => item.$type === 'flowable:ExecutionListener').length ?? 0
+    },
+    computedTaskListenerLength() {
+      this.taskListenerLength = this.element.businessObject.extensionElements?.values
+        ?.filter(item => item.$type === 'flowable:TaskListener').length ?? 0
     },
     computedHasMultiInstance() {
       if (this.element.businessObject.multiInstanceLoopCharacteristics) {
@@ -377,6 +403,12 @@ export default {
     finishExecutionListener() {
       if (this.dialogName === 'executionListenerDialog') {
         this.computedExecutionListenerLength()
+      }
+      this.dialogName = ''
+    },
+    finishTaskListener() {
+      if (this.dialogName === 'taskListenerDialog') {
+        this.computedTaskListenerLength()
       }
       this.dialogName = ''
     },
