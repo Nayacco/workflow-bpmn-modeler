@@ -88,25 +88,22 @@ export default {
     'formData.processCategory': function(val) {
       if (val === '') val = null
       this.updateProperties({ 'flowable:processCategory': val })
-    },
-    element: {
-      handler: function(val) {
-        const cache = {
-          ...this.element.businessObject,
-          ...this.element.businessObject.$attrs
-        }
-        // 移除flowable前缀，格式化数组
-        for (const key in cache) {
-          if (key.indexOf('flowable:') === 0) {
-            const newKey = key.replace('flowable:', '')
-            cache[newKey] = cache[key]
-            delete cache[key]
-          }
-        }
-        this.formData = cache
-      },
-      immediate: true
     }
+  },
+  created() {
+    const cache = {
+      ...this.element.businessObject,
+      ...this.element.businessObject.$attrs
+    }
+    // 移除flowable前缀，格式化数组
+    for (const key in cache) {
+      if (key.indexOf('flowable:') === 0) {
+        const newKey = key.replace('flowable:', '')
+        cache[newKey] = cache[key]
+        delete cache[key]
+      }
+    }
+    this.formData = cache
   },
   methods: {
     computedSignalLength() {
