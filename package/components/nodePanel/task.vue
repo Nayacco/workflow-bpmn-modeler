@@ -242,23 +242,34 @@ export default {
     }
   },
   watch: {
-    'formData.userType': function(val) {
-      const types = ['assignee', 'candidateUsers', 'candidateGroups']
-      types.forEach(type => {
-        delete this.element.businessObject.$attrs[`flowable:${type}`]
-        delete this.formData[type]
-      })
+    'formData.userType': function(val, oldVal) {
+      if (oldVal) {
+        const types = ['assignee', 'candidateUsers', 'candidateGroups']
+        types.forEach(type => {
+          delete this.element.businessObject.$attrs[`flowable:${type}`]
+          delete this.formData[type]
+        })
+      }
     },
     'formData.assignee': function(val) {
-      if (this.formData.userType !== 'assignee') return
+      if (this.formData.userType !== 'assignee') {
+        delete this.element.businessObject.$attrs[`flowable:assignee`]
+        return
+      }
       this.updateProperties({ 'flowable:assignee': val })
     },
     'formData.candidateUsers': function(val) {
-      if (this.formData.userType !== 'candidateUsers') return
+      if (this.formData.userType !== 'candidateUsers') {
+        delete this.element.businessObject.$attrs[`flowable:candidateUsers`]
+        return
+      }
       this.updateProperties({ 'flowable:candidateUsers': val?.join(',') })
     },
     'formData.candidateGroups': function(val) {
-      if (this.formData.userType !== 'candidateGroups') return
+      if (this.formData.userType !== 'candidateGroups') {
+        delete this.element.businessObject.$attrs[`flowable:candidateGroups`]
+        return
+      }
       this.updateProperties({ 'flowable:candidateGroups': val?.join(',') })
     },
     'formData.async': function(val) {
@@ -312,38 +323,36 @@ export default {
     'formData.resultVariable': function(val) {
       if (val === '') val = null
       this.updateProperties({ 'flowable:resultVariable': val })
-    },
-    element: {
-      handler: function(val) {
-        const cache = {
-          ...this.element.businessObject,
-          ...this.element.businessObject.$attrs
-        }
-        // 移除flowable前缀，格式化数组
-        for (const key in cache) {
-          if (key.indexOf('flowable:') === 0) {
-            const newKey = key.replace('flowable:', '')
-            cache[newKey] = cache[key]
-            delete cache[key]
-            if (newKey === 'candidateUsers') {
-              cache.userType = 'candidateUsers'
-              cache[newKey] = cache[newKey]?.split(',') || []
-            } else if (newKey === 'candidateGroups') {
-              cache.userType = 'candidateGroups'
-              cache[newKey] = cache[newKey]?.split(',') || []
-            } else if (newKey === 'assignee') {
-              cache.userType = 'assignee'
-            }
-          }
-        }
-        this.formData = cache
-        this.computedExecutionListenerLength()
-        this.computedTaskListenerLength()
-        this.computedHasMultiInstance()
-      },
-      deep: true,
-      immediate: true
     }
+  },
+  created() {
+    const cache = {
+      ...this.element.businessObject,
+      ...this.element.businessObject.$attrs
+    }
+    // 移除flowable前缀，格式化数组
+    for (const key in cache) {
+      if (key.indexOf('flowable:') === 0) {
+        const newKey = key.replace('flowable:', '')
+        cache[newKey] = cache[key]
+        delete cache[key]
+      }
+    }
+    for (const key in cache) {
+      if (key === 'candidateUsers') {
+        cache.userType = 'candidateUsers'
+        cache[key] = cache[key]?.split(',') || []
+      } else if (key === 'candidateGroups') {
+        cache.userType = 'candidateGroups'
+        cache[key] = cache[key]?.split(',') || []
+      } else if (key === 'assignee') {
+        cache.userType = 'assignee'
+      }
+    }
+    this.formData = cache
+    this.computedExecutionListenerLength()
+    this.computedTaskListenerLength()
+    this.computedHasMultiInstance()
   },
   methods: {
     computedExecutionListenerLength() {
