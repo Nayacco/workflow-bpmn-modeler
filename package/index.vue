@@ -141,6 +141,7 @@ export default {
     },
     // 放大缩小
     zoomViewport(zoomIn = true) {
+      this.zoom = this.modeler.get('canvas').zoom()
       this.zoom += (zoomIn ? 0.1 : -0.1)
       this.modeler.get('canvas').zoom(this.zoom)
     },
