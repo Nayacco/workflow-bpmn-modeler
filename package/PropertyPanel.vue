@@ -109,6 +109,14 @@ export default {
   },
   methods: {
     handleModeler() {
+      this.modeler.on('root.added', e => {
+        if (e.element.type === 'bpmn:Process') {
+          this.element = null
+          this.$nextTick().then(() => {
+            this.element = e.element
+          })
+        }
+      })
       this.modeler.on('element.click', e => {
         const { element } = e
         console.log(element)
