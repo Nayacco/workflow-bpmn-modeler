@@ -39,7 +39,7 @@
         <el-main style="padding: 0;">
           <div ref="canvas" class="canvas" />
         </el-main>
-        <el-aside style="width: 400px; min-height: 580px; background-color: #f0f2f5">
+        <el-aside style="width: 400px; min-height: 650px; background-color: #f0f2f5">
           <panel v-if="modeler" :modeler="modeler" :users="users" :groups="groups" :categorys="categorys" />
         </el-aside>
       </el-container>
@@ -366,6 +366,10 @@ export default {
     left: 0px!important;
     top: 0px;
     border-top: none;
+  }
+
+  .djs-container svg {
+    min-height: 650px;
   }
 
   // .highlight.djs-shape .djs-visual > :nth-child(1) {
