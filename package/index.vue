@@ -270,7 +270,10 @@ export default {
       }
     },
     getProcessElement() {
-      return this.modeler.getDefinitions().rootElements[0]
+      const rootElements = this.modeler.getDefinitions().rootElements
+      for (let i = 0; i < rootElements.length; i++) {
+        if (rootElements[i].$type === 'bpmn:Process') return rootElements[i]
+      }
     },
     async saveXML(download = false) {
       try {
