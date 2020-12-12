@@ -43,6 +43,7 @@ import mixinPanel from '../../common/mixinPanel'
 import executionListenerDialog from './property/executionListener'
 import taskListenerDialog from './property/taskListener'
 import multiInstanceDialog from './property/multiInstance'
+import { commonParse, userTaskParse } from '../../common/parseElement'
 export default {
   components: {
     executionListenerDialog,
@@ -95,6 +96,11 @@ export default {
             xType: 'colorPicker',
             name: 'color',
             label: '节点颜色'
+          },
+          {
+            xType: 'input',
+            name: 'documentation',
+            label: '节点描述'
           },
           {
             xType: 'slot',
@@ -326,29 +332,8 @@ export default {
     }
   },
   created() {
-    const cache = {
-      ...this.element.businessObject,
-      ...this.element.businessObject.$attrs
-    }
-    // 移除flowable前缀，格式化数组
-    for (const key in cache) {
-      if (key.indexOf('flowable:') === 0) {
-        const newKey = key.replace('flowable:', '')
-        cache[newKey] = cache[key]
-        delete cache[key]
-      }
-    }
-    for (const key in cache) {
-      if (key === 'candidateUsers') {
-        cache.userType = 'candidateUsers'
-        cache[key] = cache[key]?.split(',') || []
-      } else if (key === 'candidateGroups') {
-        cache.userType = 'candidateGroups'
-        cache[key] = cache[key]?.split(',') || []
-      } else if (key === 'assignee') {
-        cache.userType = 'assignee'
-      }
-    }
+    let cache = commonParse(this.element)
+    cache = userTaskParse(cache)
     this.formData = cache
     this.computedExecutionListenerLength()
     this.computedTaskListenerLength()

@@ -44,6 +44,14 @@ export default {
     'formData.color': function(val) {
       this.setColor({ fill: val, stroke: val })
       this.updateProperties({ color: val })
+    },
+    'formData.documentation': function(val) {
+      if (!val) {
+        this.updateProperties({ documentation: [] })
+        return
+      }
+      const documentationElement = this.modeler.get('moddle').create('bpmn:Documentation', { text: val })
+      this.updateProperties({ documentation: [documentationElement] })
     }
   },
   methods: {

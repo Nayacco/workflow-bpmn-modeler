@@ -19,6 +19,7 @@
 <script>
 import mixinPanel from '../../common/mixinPanel'
 import mixinExecutionListener from '../../common/mixinExecutionListener'
+import { commonParse } from '../../common/parseElement'
 export default {
   mixins: [mixinPanel, mixinExecutionListener],
   data() {
@@ -48,6 +49,11 @@ export default {
             label: '节点颜色'
           },
           {
+            xType: 'input',
+            name: 'documentation',
+            label: '节点描述'
+          },
+          {
             xType: 'slot',
             name: 'executionListener',
             label: '执行监听器'
@@ -70,19 +76,7 @@ export default {
     }
   },
   created() {
-    const cache = {
-      ...this.element.businessObject,
-      ...this.element.businessObject.$attrs
-    }
-    // 移除flowable前缀，格式化数组
-    for (const key in cache) {
-      if (key.indexOf('flowable:') === 0) {
-        const newKey = key.replace('flowable:', '')
-        cache[newKey] = cache[key]
-        delete cache[key]
-      }
-    }
-    this.formData = cache
+    this.formData = commonParse(this.element)
   }
 }
 </script>

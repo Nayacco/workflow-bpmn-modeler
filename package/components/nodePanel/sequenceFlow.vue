@@ -19,7 +19,7 @@
 <script>
 import mixinPanel from '../../common/mixinPanel'
 import mixinExecutionListener from '../../common/mixinExecutionListener'
-import { parseCDATA } from '../../common/util'
+import { commonParse, conditionExpressionParse } from '../../common/parseElement'
 export default {
   mixins: [mixinPanel, mixinExecutionListener],
   data() {
@@ -47,6 +47,11 @@ export default {
             xType: 'colorPicker',
             name: 'color',
             label: '节点颜色'
+          },
+          {
+            xType: 'input',
+            name: 'documentation',
+            label: '节点描述'
           },
           {
             xType: 'slot',
@@ -82,21 +87,8 @@ export default {
     }
   },
   created() {
-    const cache = {
-      ...this.element.businessObject,
-      ...this.element.businessObject.$attrs
-    }
-    // 移除flowable前缀，格式化数组
-    for (const key in cache) {
-      if (key.indexOf('flowable:') === 0) {
-        const newKey = key.replace('flowable:', '')
-        cache[newKey] = cache[key]
-        delete cache[key]
-      }
-      if (key === 'conditionExpression') {
-        cache[key] = parseCDATA(cache[key].body)
-      }
-    }
+    let cache = commonParse(this.element)
+    cache = conditionExpressionParse(cache)
     this.formData = cache
   }
 }
