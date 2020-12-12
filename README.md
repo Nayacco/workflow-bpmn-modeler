@@ -128,6 +128,16 @@ export default {
 </html>
 ```
 
+## 关于定制
+
+本组件对标的是 flowable 官方设计器，也就是实现 flowable 的 xml 规则标准，里面所用名词也都是官方文档中的专业术语。所以这个组件只是程序员在开发阶段，自己建模导出 xml 的工具，试图定制该建模器的行为都是不对的，不要把业务带到建模器中来！自己的业务应该另行开发增删改查来实现。
+
+该组件未来也不会升级 UI 库和 vue。不管库是否兼容，通过 iframe 的方式集成建模器才是最简单正确的方式。
+
+## 赞助支持
+
+![donate](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/donate.png)
+
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
