@@ -31,6 +31,7 @@
 
 <script>
 import mixinPanel from '../../../common/mixinPanel'
+import { formatJsonKeyValue } from '../../../common/parseElement'
 export default {
   mixins: [mixinPanel],
   data() {
@@ -61,7 +62,7 @@ export default {
             xType: 'radio',
             name: 'isSequential',
             label: '执行方式',
-            dic: [{ label: '串行', value: 'true' }, { label: '并行', value: 'false' }]
+            dic: [{ label: '串行', value: true }, { label: '并行', value: false }]
           },
           {
             xType: 'input',
@@ -78,35 +79,27 @@ export default {
     }
   },
   mounted() {
-    const cache = JSON.parse(JSON.stringify(this.element.businessObject.multiInstanceLoopCharacteristics?.$attrs ?? {}))
-    cache.completionCondition = this.element.businessObject.multiInstanceLoopCharacteristics?.completionCondition?.body
-    // 移除flowable前缀，格式化数组
-    for (const key in cache) {
-      if (key.indexOf('flowable:') === 0) {
-        const newKey = key.replace('flowable:', '')
-        cache[newKey] = cache[key]
-        delete cache[key]
-      }
-    }
-    this.formData = cache
+    const cache = JSON.parse(JSON.stringify(this.element.businessObject.loopCharacteristics ?? {}))
+    cache.completionCondition = cache.completionCondition?.body
+    this.formData = formatJsonKeyValue(cache)
   },
   methods: {
     updateElement() {
-      if (this.formData.isSequential) {
-        let multiInstanceLoopCharacteristics = this.element.businessObject.get('multiInstanceLoopCharacteristics')
-        if (!multiInstanceLoopCharacteristics) {
-          multiInstanceLoopCharacteristics = this.modeler.get('moddle').create('bpmn:MultiInstanceLoopCharacteristics')
+      if (this.formData.isSequential !== null || this.formData.isSequential !== undefined) {
+        let loopCharacteristics = this.element.businessObject.get('loopCharacteristics')
+        if (!loopCharacteristics) {
+          loopCharacteristics = this.modeler.get('moddle').create('bpmn:MultiInstanceLoopCharacteristics')
         }
-        multiInstanceLoopCharacteristics.$attrs['isSequential'] = this.formData.isSequential
-        multiInstanceLoopCharacteristics.$attrs['flowable:collection'] = this.formData.collection
-        multiInstanceLoopCharacteristics.$attrs['flowable:elementVariable'] = this.formData.elementVariable
+        loopCharacteristics['isSequential'] = this.formData.isSequential
+        loopCharacteristics['flowable:collection'] = this.formData.collection
+        loopCharacteristics['flowable:elementVariable'] = this.formData.elementVariable
         if (this.formData.completionCondition) {
           const completionCondition = this.modeler.get('moddle').create('bpmn:Expression', { body: this.formData.completionCondition })
-          multiInstanceLoopCharacteristics['completionCondition'] = completionCondition
+          loopCharacteristics['completionCondition'] = completionCondition
         }
-        this.updateProperties({ multiInstanceLoopCharacteristics: multiInstanceLoopCharacteristics })
+        this.updateProperties({ loopCharacteristics: loopCharacteristics })
       } else {
-        delete this.element.businessObject.multiInstanceLoopCharacteristics
+        delete this.element.businessObject.loopCharacteristics
       }
     },
     save() {

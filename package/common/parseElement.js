@@ -1,10 +1,12 @@
-import { parseCDATA } from './util'
-
 export function commonParse(element) {
-  let result = {
+  const result = {
     ...element.businessObject,
     ...element.businessObject.$attrs
   }
+  return formatJsonKeyValue(result)
+}
+
+export function formatJsonKeyValue(result) {
   // 移除flowable前缀，格式化数组
   for (const key in result) {
     if (key.indexOf('flowable:') === 0) {
@@ -30,7 +32,7 @@ export function documentationParse(obj) {
 
 export function conditionExpressionParse(obj) {
   if ('conditionExpression' in obj) {
-    obj.conditionExpression = parseCDATA(obj.conditionExpression.body)
+    obj.conditionExpression = obj.conditionExpression.body
   }
   return obj
 }

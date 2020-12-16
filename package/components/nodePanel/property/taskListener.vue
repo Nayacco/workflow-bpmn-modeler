@@ -164,7 +164,7 @@ export default {
               fieldElement['name'] = field.name
               fieldElement[field.type] = field.value
               // 注意：flowable.json 中定义的string和expression类为小写，不然会和原生的String类冲突，此处为hack
-              // const valueElement = this.modeler.get('moddle').create(`flowable:${field.type}`, { body: `<![CDATA[${field.value}]]>` })
+              // const valueElement = this.modeler.get('moddle').create(`flowable:${field.type}`, { body: field.value })
               // fieldElement[field.type] = valueElement
               taskListener.get('fields').push(fieldElement)
             })

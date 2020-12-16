@@ -75,7 +75,7 @@ export default {
   watch: {
     'formData.conditionExpression': function(val) {
       if (val) {
-        const newCondition = this.modeler.get('moddle').create('bpmn:FormalExpression', { body: `<![CDATA[${val}]]>` })
+        const newCondition = this.modeler.get('moddle').create('bpmn:FormalExpression', { body: val })
         this.updateProperties({ conditionExpression: newCondition })
       } else {
         this.updateProperties({ conditionExpression: null })
