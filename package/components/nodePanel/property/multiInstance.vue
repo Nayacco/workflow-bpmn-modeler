@@ -91,8 +91,8 @@ export default {
           loopCharacteristics = this.modeler.get('moddle').create('bpmn:MultiInstanceLoopCharacteristics')
         }
         loopCharacteristics['isSequential'] = this.formData.isSequential
-        loopCharacteristics['flowable:collection'] = this.formData.collection
-        loopCharacteristics['flowable:elementVariable'] = this.formData.elementVariable
+        loopCharacteristics['collection'] = this.formData.collection
+        loopCharacteristics['elementVariable'] = this.formData.elementVariable
         if (this.formData.completionCondition) {
           const completionCondition = this.modeler.get('moddle').create('bpmn:Expression', { body: this.formData.completionCondition })
           loopCharacteristics['completionCondition'] = completionCondition
