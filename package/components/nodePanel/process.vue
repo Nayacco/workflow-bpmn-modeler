@@ -67,11 +67,6 @@ export default {
             label: '流程名称'
           },
           {
-            xType: 'colorPicker',
-            name: 'color',
-            label: '节点颜色'
-          },
-          {
             xType: 'input',
             name: 'documentation',
             label: '节点描述'

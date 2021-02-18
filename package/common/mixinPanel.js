@@ -41,10 +41,6 @@ export default {
     'formData.name': function(val) {
       this.updateProperties({ name: val })
     },
-    'formData.color': function(val) {
-      this.setColor({ fill: val, stroke: val })
-      this.updateProperties({ color: val })
-    },
     'formData.documentation': function(val) {
       if (!val) {
         this.updateProperties({ documentation: [] })
@@ -58,10 +54,6 @@ export default {
     updateProperties(properties) {
       const modeling = this.modeler.get('modeling')
       modeling.updateProperties(this.element, properties)
-    },
-    setColor(properties) {
-      const modeling = this.modeler.get('modeling')
-      modeling.setColor(this.element, properties)
     }
   },
   computed: {
