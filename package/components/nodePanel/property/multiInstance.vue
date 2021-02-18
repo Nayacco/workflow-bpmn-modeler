@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     updateElement() {
-      if (this.formData.isSequential !== null || this.formData.isSequential !== undefined) {
+      if (this.formData.isSequential !== null && this.formData.isSequential !== undefined) {
         let loopCharacteristics = this.element.businessObject.get('loopCharacteristics')
         if (!loopCharacteristics) {
           loopCharacteristics = this.modeler.get('moddle').create('bpmn:MultiInstanceLoopCharacteristics')
