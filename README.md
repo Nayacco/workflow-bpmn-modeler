@@ -1,5 +1,9 @@
 # workflow-bpmn-modeler
 
+[![NPM Version](http://img.shields.io/npm/v/workflow-bpmn-modeler.svg?style=flat)](https://www.npmjs.org/package/workflow-bpmn-modeler)
+[![NPM Downloads](https://img.shields.io/npm/dm/workflow-bpmn-modeler.svg?style=flat)](https://www.npmjs.org/package/workflow-bpmn-modeler)
+![](https://img.shields.io/badge/license-MIT-000000.svg)
+
 🔥 本项目基于 `vue` 和 `bpmn.io@7.0` ，实现 flowable 的 modeler 流程设计器
 
 ## 预览
