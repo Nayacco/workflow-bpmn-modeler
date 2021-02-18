@@ -1,6 +1,6 @@
 {
   "name": "workflow-bpmn-modeler",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "基于 `vue` 和 `bpmn.io@7.0` ，实现 flowable 的 modeler 模型设计器",
   "main": "dist/workflow-bpmn-modeler.umd.min.js",
   "scripts": {
