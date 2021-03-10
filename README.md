@@ -140,7 +140,9 @@ export default {
 
 ## 赞助支持
 
-![donate](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/donate.png)
+| :zap: **wechat**           | :zap: **alipay**           |
+| ------------------------ | ------------------------ |
+|<img width=200 src="https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/donate_wechat.png"/>|<img width=200 src="https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/donate_alipay.png"/>|
 
 ## License
 
