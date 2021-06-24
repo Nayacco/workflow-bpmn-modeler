@@ -1,27 +1,29 @@
+English | [简体中文](./README_CN.md)
+
 # workflow-bpmn-modeler
 
 [![NPM Version](http://img.shields.io/npm/v/workflow-bpmn-modeler.svg?style=flat)](https://www.npmjs.org/package/workflow-bpmn-modeler)
 [![NPM Downloads](https://img.shields.io/npm/dm/workflow-bpmn-modeler.svg?style=flat)](https://www.npmjs.org/package/workflow-bpmn-modeler)
 ![](https://img.shields.io/badge/license-MIT-000000.svg)
 
-🔥 本项目基于 `vue` 和 `bpmn.io@7.0` ，实现 flowable 的 modeler 流程设计器
+🔥 This project implements flowable's workflow designer based on `vue` and `bpmn.io@7.0`
 
-## 预览
+## Preview
 
 ![20200930030243](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200930030243.png)
 
-## 在线 demo
+## Online demo
 
 👉 https://goldsubmarine.github.io/workflow-bpmn-modeler/demo/
 
-## 安装
+## Install ⏳
 
 ```bash
-# 安装
+# Install
 yarn add workflow-bpmn-modeler
 ```
 
-## 使用说明（最简 demo）
+## How to use 👣
 
 ```vue
 <template>
@@ -47,26 +49,26 @@ export default {
   },
   data() {
     return {
-      xml: "", // 后端查询到的xml
+      xml: "", // Query to xml
       users: [
-        { name: "张三", id: "zhangsan" },
-        { name: "李四", id: "lisi" },
-        { name: "王五", id: "wangwu" },
+        { name: "The Beatles", id: "1" },
+        { name: "The Rolling Stones", id: "2" },
+        { name: "Pink Floyed", id: "3" },
       ],
       groups: [
-        { name: "web组", id: "web" },
-        { name: "java组", id: "java" },
-        { name: "python组", id: "python" },
+        { name: "Folk Music", id: "4" },
+        { name: "Rock Music", id: "5" },
+        { name: "Classical Music", id: "6" },
       ],
       categorys: [
-        { name: "OA", id: "oa" },
-        { name: "财务", id: "finance" },
+        { name: "Music", id: "7" },
+        { name: "Articles", id: "8" },
       ],
     };
   },
   methods: {
     getModelDetail() {
-      // 发送请求，获取xml
+      // Send request to get xml
       // this.xml = response.xml
     },
     save(data) {
@@ -77,15 +79,15 @@ export default {
 </script>
 ```
 
-## iframe 部署
+## Iframe Deployment
 
-如果你的项目是 jquery 或 react 类项目，可以通过 iframe 的方式集成该流程设计器
+If your project is a `jquery` or `react` project, you can integrate the workflow designer by means of an iframe
 
-本仓库通过 github pages 部署了静态页面，使用 jsdelivr 做 cdn ，国内访问也非常快速，所以你可以直接集成本仓库的页面，因为全部白嫖了 github 的资源，没有自己建服务器维护，所以不用担心资源失效问题。
+This repository deployed a static page by the github pages, using `jsdelivr` cdn, access in China is also very fast, so you can directly integrate the pages of this repository, because all the free github resources are used, did not build their own server maintenance, so do not worry about the failure of resources.
 
-当然你也可以在 `docs/lib` 文件夹下下载对应的版本，进行本地部署。
+Of course you can also download the corresponding version from the `docs/lib` folder for local deployment.
 
-集成方式如下（ps：可直接拷贝以下代码到一个html文件中试一下）：
+The integration method is as follows (ps: you can copy the following code directly into an html file and try it out)
 
 ```html
 <!DOCTYPE html>
@@ -101,30 +103,30 @@ export default {
 
     <script>
       let myFrame = document.getElementById("myFrame");
-      // 获取到流程详情
+      // Get details
       window.addEventListener("message", (event) => {
         console.log(event.data); // { xml: 'xxx', img: 'xxx', process: {} }
       });
       myFrame.onload = () => {
         let postMsg = {
-          xml: "", // 后端查询到的xml，新建则为空串
+          xml: "", // Query to xml
           users: [
-            { name: "张三1", id: "zhangsan" },
-            { name: "李四1", id: "lisi" },
-            { name: "王五1", id: "wangwu" },
+            { name: "The Beatles", id: "1" },
+            { name: "The Rolling Stones", id: "2" },
+            { name: "Pink Floyed", id: "3" },
           ],
           groups: [
-            { name: "web组1", id: "web" },
-            { name: "java组1", id: "java" },
-            { name: "python组1", id: "python" },
+            { name: "Folk Music", id: "4" },
+            { name: "Rock Music", id: "5" },
+            { name: "Classical Music", id: "6" },
           ],
           categorys: [
-            { name: "OA1", id: "oa" },
-            { name: "财务1", id: "finance" },
+            { name: "Music", id: "7" },
+            { name: "Articles", id: "8" },
           ],
           isView: false
         }
-        // 设置初始化值
+        // Set initialization value
         myFrame.contentWindow.postMessage(postMsg, "*")
       }
     </script>
@@ -132,19 +134,19 @@ export default {
 </html>
 ```
 
-## 关于定制
+## About Customization 🛠
 
-本组件对标的是 flowable 官方设计器，也就是实现 flowable 的 xml 规则标准，里面所用名词也都是官方文档中的专业术语。所以这个组件只是程序员在开发阶段，自己建模导出 xml 的工具，试图定制该建模器的行为都是不对的，不要把业务带到建模器中来！自己的业务应该另行开发增删改查来实现。
+This component is aligned to the official flowable designer, which is the standard for implementing flowable's xml rules, and the terms used in it are all terminology from the official documentation. So this component is just a tool for programmers to model and export xml by themselves during the development phase, and it is wrong to try to customize the behavior of this modeler. Your own business should be developed separately to implement it.
 
-该组件未来也不会升级 UI 库和 vue。不管库是否兼容，通过 iframe 的方式集成建模器才是最简单正确的方式。
+The component will not upgrade the UI library or vue in the future, and regardless of library compatibility, integrating the modeler via an iframe is the easiest and correct way to do it.
 
-## 赞助支持
+## Sponsor 🧡
 
 | :zap: **wechat**           | :zap: **alipay**           |
 | ------------------------ | ------------------------ |
 |<img width=200 src="https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/donate_wechat.png"/>|<img width=200 src="https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/donate_alipay.png"/>|
 
-## License
+## License 📄
 
 [MIT](http://opensource.org/licenses/MIT)
 
