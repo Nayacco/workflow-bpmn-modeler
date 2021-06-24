@@ -8,11 +8,11 @@
 
 🔥 本项目基于 `vue` 和 `bpmn.io@7.0` ，实现 flowable 的工作流设计器
 
-## 预览
+## 预览 📟
 
 ![20200930030243](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200930030243.png)
 
-## 在线 demo
+## 在线 demo 📢
 
 👉 https://goldsubmarine.github.io/workflow-bpmn-modeler/demo/
 
@@ -79,7 +79,7 @@ export default {
 </script>
 ```
 
-## iframe 部署
+## iframe 部署 🎪
 
 如果你的项目是 jquery 或 react 类项目，可以通过 iframe 的方式集成该流程设计器
 

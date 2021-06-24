@@ -8,11 +8,11 @@ English | [简体中文](./README_CN.md)
 
 🔥 This project implements flowable's workflow designer based on `vue` and `bpmn.io@7.0`
 
-## Preview
+## Preview 📟
 
 ![20200930030243](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200930030243.png)
 
-## Online demo
+## Online demo 📢
 
 👉 https://goldsubmarine.github.io/workflow-bpmn-modeler/demo/
 
@@ -79,7 +79,7 @@ export default {
 </script>
 ```
 
-## Iframe Deployment
+## Iframe Deployment 🎪
 
 If your project is a `jquery` or `react` project, you can integrate the workflow designer by means of an iframe
 
@@ -134,7 +134,7 @@ The integration method is as follows (ps: you can copy the following code direct
 </html>
 ```
 
-## About Customization 🛠
+## Customization 🛠
 
 This component is aligned to the official flowable designer, which is the standard for implementing flowable's xml rules, and the terms used in it are all terminology from the official documentation. So this component is just a tool for programmers to model and export xml by themselves during the development phase, and it is wrong to try to customize the behavior of this modeler. Your own business should be developed separately to implement it.
 
