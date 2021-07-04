@@ -49,7 +49,7 @@ export default {
   },
   data() {
     return {
-      xml: "", // Query to xml
+      xml: "", // Query the xml
       users: [
         { name: "The Beatles", id: "1" },
         { name: "The Rolling Stones", id: "2" },
@@ -109,7 +109,7 @@ The integration method is as follows (ps: you can copy the following code direct
       });
       myFrame.onload = () => {
         let postMsg = {
-          xml: "", // Query to xml
+          xml: "", // Query the xml
           users: [
             { name: "The Beatles", id: "1" },
             { name: "The Rolling Stones", id: "2" },
@@ -145,6 +145,8 @@ The component will not upgrade the UI library or vue in the future, and regardle
 | :zap: **wechat**           | :zap: **alipay**           |
 | ------------------------ | ------------------------ |
 |<img width=200 src="https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/donate_wechat.png"/>|<img width=200 src="https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/donate_alipay.png"/>|
+
+- @bufegar ¥100
 
 ## License 📄
 
