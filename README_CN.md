@@ -147,6 +147,7 @@ export default {
 |<img width=200 src="https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/donate_wechat.png"/>|<img width=200 src="https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/donate_alipay.png"/>|
 
 - @bufegar ¥100
+- 匿名 ¥20
 
 ## License 📄
 

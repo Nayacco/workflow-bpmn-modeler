@@ -147,6 +147,7 @@ The component will not upgrade the UI library or vue in the future, and regardle
 |<img width=200 src="https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/donate_wechat.png"/>|<img width=200 src="https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/donate_alipay.png"/>|
 
 - @bufegar ¥100
+- anonymous ¥20
 
 ## License 📄
 
