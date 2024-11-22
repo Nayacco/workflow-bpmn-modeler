@@ -137,7 +137,7 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "https://cdn.jsdelivr.net/gh/goldsubmarine/workflow-bpmn-modeler@0.2.8/docs/cdn/0.2.8/";
+/******/ 	__webpack_require__.p = "https://cdn.jsdelivr.net/gh/nayacco/workflow-bpmn-modeler@0.2.8/docs/cdn/0.2.8/";
 /******/
 /******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
 /******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);

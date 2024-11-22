@@ -10,11 +10,11 @@ English | [简体中文](./README_CN.md)
 
 ## Preview 📟
 
-![20200930030243](https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/20200930030243.png)
+![20200930030243](https://cdn.jsdelivr.net/gh/nayacco/cdn@master/blog/20200930030243.png)
 
 ## Online demo 📢
 
-👉 https://goldsubmarine.github.io/workflow-bpmn-modeler/demo/
+👉 https://nayacco.github.io/workflow-bpmn-modeler/demo/
 
 ## Install ⏳
 
@@ -94,7 +94,7 @@ The integration method is as follows (ps: you can copy the following code direct
 <html lang="en">
   <body>
     <iframe
-      src="https://goldsubmarine.github.io/workflow-bpmn-modeler/cdn/0.2.8/"
+      src="https://nayacco.github.io/workflow-bpmn-modeler/cdn/0.2.8/"
       id="myFrame"
       frameborder="0"
       width="100%"
@@ -144,7 +144,7 @@ The component will not upgrade the UI library or vue in the future, and regardle
 
 | :zap: **wechat**           | :zap: **alipay**           |
 | ------------------------ | ------------------------ |
-|<img width=200 src="https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/donate_wechat.png"/>|<img width=200 src="https://cdn.jsdelivr.net/gh/goldsubmarine/cdn@master/blog/donate_alipay.png"/>|
+|<img width=200 src="https://cdn.jsdelivr.net/gh/nayacco/cdn@master/blog/donate_wechat.png"/>|<img width=200 src="https://cdn.jsdelivr.net/gh/nayacco/cdn@master/blog/donate_alipay.png"/>|
 
 - @bufegar ¥100
 - anonymous ¥20

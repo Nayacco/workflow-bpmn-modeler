@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     getModelDetail() {
-      fetch('https://cdn.jsdelivr.net/gh/goldsubmarine/workflow-bpmn-modeler@master/src/Leave.bpmn20.xml')
+      fetch('https://cdn.jsdelivr.net/gh/nayacco/workflow-bpmn-modeler@master/src/Leave.bpmn20.xml')
         .then(response => {
           return response.text()
         }).then(xml => {
